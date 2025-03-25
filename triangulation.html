@@ -222,7 +222,7 @@
     legend.addTo(map);
     
     // Function to validate coordinates
-    function validateCoordinates(lat, lng) {
+    const validateCoordinates = function(lat, lng) {
       const errors = [];
       if (isNaN(lat) || lat < -90 || lat > 90) {
         errors.push('La latitudine deve essere un numero tra -90 e 90');
@@ -234,7 +234,7 @@
     }
     
     // Function to validate distance
-    function validateDistance(distance) {
+    const  validateDistance= function(distance) {
       const errors = [];
       if (isNaN(distance) || distance <= 0) {
         errors.push('La distanza deve essere un numero positivo');
