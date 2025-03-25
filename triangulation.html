@@ -352,7 +352,7 @@
     }
     
     // Function to update the map with points and perform triangulation
-    function updateMap() {
+    function updateMap(validate) {
       markersGroup.clearLayers();
       circlesGroup.clearLayers();
       triangulationGroup.clearLayers();
@@ -368,8 +368,10 @@
         const lat = parseFloat(document.getElementById(`lat${i}`).value);
         const lng = parseFloat(document.getElementById(`lng${i}`).value);
         const distance = parseFloat(document.getElementById(`distance${i}`).value);
+        if(validate){
         const coordErrors = validateCoordinates(lat, lng);
         const distanceErrors = validateDistance(distance);
+        }
         if (coordErrors.length > 0) {
           document.getElementById(`lat${i}-error`).textContent = coordErrors.join('. ');
           hasErrors = true;
@@ -471,7 +473,7 @@
       }
     }
     
-    updateMap();
+    updateMap(false);
     document.getElementById('update-map').addEventListener('click', updateMap);
     document.getElementById('toggle-circles').addEventListener('click', toggleCircles);
   </script>
