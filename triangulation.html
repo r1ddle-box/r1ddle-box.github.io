@@ -352,7 +352,7 @@
     }
     
     // Function to update the map with points and perform triangulation
-    function updateMap(validate) {
+    function updateMap() {
       markersGroup.clearLayers();
       circlesGroup.clearLayers();
       triangulationGroup.clearLayers();
@@ -472,8 +472,9 @@
         map.addLayer(circlesGroup);
       }
     }
-    
-    updateMap(false);
+    let validate=false;
+    updateMap();
+    validate=true;
     document.getElementById('update-map').addEventListener('click', updateMap);
     document.getElementById('toggle-circles').addEventListener('click', toggleCircles);
   </script>
