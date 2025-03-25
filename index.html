@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Router</title>
+</head>
+<body>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Parse the query string from the URL
+            const params = new URLSearchParams(window.location.search);
+            // Get the value of the 'p' parameter
+            const page = params.get('p');
+
+            // If 'p' is provided, fetch and load the corresponding HTML file
+            if (page) {
+                fetch(page + '.html')
+                    .then(response => {
+                        // Check if the fetch was successful
+                        if (!response.ok) {
+                            throw new Error('Page not found');
+                        }
+                        return response.text();
+                    })
+                    .then(html => {
+                        // Replace the entire document content with the fetched HTML
+                        document.open();
+                        document.write(html);
+                        document.close();
+                    })
+                    .catch(error => {
+                        // Log any errors to the console
+                        console.error('Error fetching page:', error);
+                    });
+            }
+        });
+    </script>
+</body>
+</html>
