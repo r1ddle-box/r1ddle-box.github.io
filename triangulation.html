@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Triangolazione</title>
+  <link rel="icon" type="image/x-icon" href="https://img.icons8.com/?size=100&id=oWXNXJ11wn0K&format=png&color=000000">
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css" />
+  
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    
+    #map {
+      height: 500px;
+      width: 100%;
+      border-radius: 8px;
+      margin-top: 20px;
+    }
+    
+    .form-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+    
+    .point-inputs {
+      flex: 1;
+      min-width: 280px;
+      padding: 15px;
+      background-color: #f5f5f5;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    
+    .point-inputs h3 {
+      margin-top: 0;
+      color: #333;
+    }
+    
+    input {
+      width: 100%;
+      padding: 8px;
+      margin: 5px 0 15px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+    
+    button {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+      margin-right: 10px;
+    }
+    
+    button:hover {
+      background-color: #45a049;
+    }
+    
+    .error {
+      color: red;
+      margin-top: 5px;
+      font-size: 14px;
+    }
+    
+    .results {
+      margin-top: 20px;
+      padding: 15px;
+      background-color: #f0f8ff;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    
+    .buttons-container {
+      margin-bottom: 20px;
+    }
+    
+    .legend {
+      background-color: white;
+      padding: 10px;
+      border-radius: 5px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.2);
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      z-index: 1000;
+    }
+    
+    .legend-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 5px;
+    }
+    
+    .legend-color {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      margin-right: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>📡 Triangolazione Online</h1>
+  <p>Inserisci le coordinate di tre punti noti e le distanze da ciascun punto per calcolare una posizione triangolata.<br>
+     In questo esempio i cerchi sono impostati per intersecarsi perfettamente.</p>
+  
+  <div class="form-container">
+    <div class="point-inputs">
+      <h3>Antenna 1</h3>
+      <label for="lat1">Latitudine:</label>
+      <input type="text" id="lat1" value="45.475332" placeholder="es. 45.475332">
+      <div id="lat1-error" class="error"></div>
+      
+      <label for="lng1">Longitudine:</label>
+      <input type="text" id="lng1" value="9.216429" placeholder="es. 9.216429">
+      <div id="lng1-error" class="error"></div>
+      
+      <label for="distance1">Distanza (km):</label>
+      <input type="text" id="distance1" value="2.902" placeholder="es. 2.902">
+      <div id="distance1-error" class="error"></div>
+    </div>
+    
+    <div class="point-inputs">
+      <h3>Antenna 2</h3>
+      <label for="lat2">Latitudine:</label>
+      <input type="text" id="lat2" value="45.450924" placeholder="es. 45.450924">
+      <div id="lat2-error" class="error"></div>
+      
+      <label for="lng2">Longitudine:</label>
+      <input type="text" id="lng2" value="9.212326" placeholder="es. 9.212326">
+      <div id="lng2-error" class="error"></div>
+      
+      <label for="distance2">Distanza (km):</label>
+      <input type="text" id="distance2" value="3.113" placeholder="es. 3.113">
+      <div id="distance2-error" class="error"></div>
+    </div>
+    
+    <div class="point-inputs">
+      <h3>Antenna 3</h3>
+      <label for="lat3">Latitudine:</label>
+      <input type="text" id="lat3" value="45.481269" placeholder="es. 45.481269">
+      <div id="lat3-error" class="error"></div>
+      
+      <label for="lng3">Longitudine:</label>
+      <input type="text" id="lng3" value="9.160656" placeholder="es. 9.160656">
+      <div id="lng3-error" class="error"></div>
+      
+      <label for="distance3">Distanza (km):</label>
+      <input type="text" id="distance3" value="2.149" placeholder="es. 2.149">
+      <div id="distance3-error" class="error"></div>
+    </div>
+  </div>
+  
+  <div class="buttons-container">
+    <button id="update-map">Aggiorna Mappa e Calcola</button>
+    <button id="toggle-circles">Attiva/Disattiva Cerchi di Distanza</button>
+  </div>
+  
+  <div id="map"></div>
+  
+  <div class="results" id="results">
+    <h3>Risultati della Triangolazione</h3>
+    <p>Inserisci le coordinate e le distanze, quindi clicca su "Aggiorna Mappa e Calcola" per vedere i risultati.</p>
+  </div>
+  
+  <!-- Leaflet JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
+  
+  <script>
+    // (The rest of the JavaScript remains the same.)
+    // It will perform triangulation using ECEF conversion and then display the result.
+    
+    // Initialize map
+    const map = L.map('map').setView([37.7749, -122.4194], 13);
+    
+    // Add OpenStreetMap tiles
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© <a href="https://www.openstreetmap.org/copyright">Collaboratori di OpenStreetMap</a>'
+    }).addTo(map);
+    
+    // Initialize markers array and layer groups
+    let markers = [];
+    let circles = [];
+    let triangulationMarker = null;
+    const markersGroup = L.layerGroup().addTo(map);
+    const circlesGroup = L.layerGroup().addTo(map);
+    const triangulationGroup = L.layerGroup().addTo(map);
+    
+    // Add legend
+    const legend = L.control({position: 'bottomright'});
+    legend.onAdd = function (map) {
+      const div = L.DomUtil.create('div', 'legend');
+      div.innerHTML = `
+        <h4>Legenda</h4>
+        <div class="legend-item">
+          <div class="legend-color" style="background-color: blue;"></div>
+          <span>Punti Noti</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-color" style="background-color: red;"></div>
+          <span>Posizione Triangolata</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-color" style="border: 2px solid blue; background-color: rgba(0, 0, 255, 0.1);"></div>
+          <span>Cerchi di Distanza</span>
+        </div>
+      `;
+      return div;
+    };
+    legend.addTo(map);
+    
+    // Function to validate coordinates
+    function validateCoordinates(lat, lng) {
+      const errors = [];
+      if (isNaN(lat) || lat < -90 || lat > 90) {
+        errors.push('La latitudine deve essere un numero tra -90 e 90');
+      }
+      if (isNaN(lng) || lng < -180 || lng > 180) {
+        errors.push('La longitudine deve essere un numero tra -180 e 180');
+      }
+      return errors;
+    }
+    
+    // Function to validate distance
+    function validateDistance(distance) {
+      const errors = [];
+      if (isNaN(distance) || distance <= 0) {
+        errors.push('La distanza deve essere un numero positivo');
+      }
+      return errors;
+    }
+    
+    // Function to convert degrees to radians
+    function toRadians(degrees) {
+      return degrees * (Math.PI / 180);
+    }
+    
+    // Function to convert radians to degrees
+    function toDegrees(radians) {
+      return radians * (180 / Math.PI);
+    }
+    
+    // Function to calculate distance between two points in km (Haversine formula)
+    function calculateDistance(lat1, lon1, lat2, lon2) {
+      const R = 6371; // Raggio della Terra in km
+      const dLat = toRadians(lat2 - lat1);
+      const dLon = toRadians(lon2 - lon1);
+      const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+                Math.cos(toRadians(lat1)) * Math.cos(toRadians(lat2)) *
+                Math.sin(dLon/2) * Math.sin(dLon/2);
+      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+      return R * c;
+    }
+    
+    // Function to perform trilateration
+    function trilaterate(p1, p2, p3, r1, r2, r3) {
+      // Convert r1, r2, r3 from kilometers to meters
+      r1 *= 1000;
+      r2 *= 1000;
+      r3 *= 1000;
+      
+      // Convert lat/lng to ECEF coordinates
+      function latLngToECEF(lat, lng) {
+        const a = 6378137.0; // asse semi-maggiore
+        const e2 = 6.69437999014e-3; // prima eccentricità al quadrato
+        const phi = toRadians(lat);
+        const lambda = toRadians(lng);
+        const sinPhi = Math.sin(phi);
+        const cosPhi = Math.cos(phi);
+        const sinLambda = Math.sin(lambda);
+        const cosLambda = Math.cos(lambda);
+        const N = a / Math.sqrt(1 - e2 * sinPhi * sinPhi);
+        const x = N * cosPhi * cosLambda;
+        const y = N * cosPhi * sinLambda;
+        const z = (N * (1 - e2)) * sinPhi;
+        return [x, y, z];
+      }
+      
+      // Convert ECEF to lat/lng
+      function ECEFToLatLng(x, y, z) {
+        const a = 6378137.0;
+        const e2 = 6.69437999014e-3;
+        const b = a * Math.sqrt(1 - e2);
+        const ep2 = (a*a - b*b) / (b*b);
+        const p = Math.sqrt(x*x + y*y);
+        const theta = Math.atan2(z*a, p*b);
+        const sinTheta = Math.sin(theta);
+        const cosTheta = Math.cos(theta);
+        const phi = Math.atan2(z + ep2 * b * sinTheta * sinTheta * sinTheta, p - e2 * a * cosTheta * cosTheta * cosTheta);
+        const lambda = Math.atan2(y, x);
+        return [toDegrees(phi), toDegrees(lambda)];
+      }
+      
+      const p1_ecef = latLngToECEF(p1[0], p1[1]);
+      const p2_ecef = latLngToECEF(p2[0], p2[1]);
+      const p3_ecef = latLngToECEF(p3[0], p3[1]);
+      
+      const ex = [
+        (p2_ecef[0] - p1_ecef[0]) / Math.hypot(p2_ecef[0] - p1_ecef[0], p2_ecef[1] - p1_ecef[1], p2_ecef[2] - p1_ecef[2]),
+        (p2_ecef[1] - p1_ecef[1]) / Math.hypot(p2_ecef[0] - p1_ecef[0], p2_ecef[1] - p1_ecef[1], p2_ecef[2] - p1_ecef[2]),
+        (p2_ecef[2] - p1_ecef[2]) / Math.hypot(p2_ecef[0] - p1_ecef[0], p2_ecef[1] - p1_ecef[1], p2_ecef[2] - p1_ecef[2])
+      ];
+      
+      const i = ex[0] * (p3_ecef[0] - p1_ecef[0]) + ex[1] * (p3_ecef[1] - p1_ecef[1]) + ex[2] * (p3_ecef[2] - p1_ecef[2]);
+      
+      const ey = [
+        (p3_ecef[0] - p1_ecef[0] - i * ex[0]) / Math.hypot(p3_ecef[0] - p1_ecef[0] - i * ex[0], p3_ecef[1] - p1_ecef[1] - i * ex[1], p3_ecef[2] - p1_ecef[2] - i * ex[2]),
+        (p3_ecef[1] - p1_ecef[1] - i * ex[1]) / Math.hypot(p3_ecef[0] - p1_ecef[0] - i * ex[0], p3_ecef[1] - p1_ecef[1] - i * ex[1], p3_ecef[2] - p1_ecef[2] - i * ex[2]),
+        (p3_ecef[2] - p1_ecef[2] - i * ex[2]) / Math.hypot(p3_ecef[0] - p1_ecef[0] - i * ex[0], p3_ecef[1] - p1_ecef[1] - i * ex[1], p3_ecef[2] - p1_ecef[2] - i * ex[2])
+      ];
+      
+      const ez = [
+        ex[1] * ey[2] - ex[2] * ey[1],
+        ex[2] * ey[0] - ex[0] * ey[2],
+        ex[0] * ey[1] - ex[1] * ey[0]
+      ];
+      
+      const d = Math.hypot(p2_ecef[0] - p1_ecef[0], p2_ecef[1] - p1_ecef[1], p2_ecef[2] - p1_ecef[2]);
+      const j = ey[0] * (p3_ecef[0] - p1_ecef[0]) + ey[1] * (p3_ecef[1] - p1_ecef[1]) + ey[2] * (p3_ecef[2] - p1_ecef[2]);
+      
+      const x = (r1*r1 - r2*r2 + d*d) / (2*d);
+      const y = (r1*r1 - r3*r3 + i*i + j*j) / (2*j) - (i/j) * x;
+      
+      let z_squared = r1*r1 - x*x - y*y;
+      if (z_squared < 0 && z_squared > -1) {
+        z_squared = 0;
+      }
+      if (z_squared < 0) {
+        z_squared = 0;
+      }
+      const z = Math.sqrt(z_squared);
+      
+      const triPt_ecef = [
+        p1_ecef[0] + x * ex[0] + y * ey[0] + z * ez[0],
+        p1_ecef[1] + x * ex[1] + y * ey[1] + z * ez[1],
+        p1_ecef[2] + x * ex[2] + y * ey[2] + z * ez[2]
+      ];
+      
+      return ECEFToLatLng(triPt_ecef[0], triPt_ecef[1], triPt_ecef[2]);
+    }
+    
+    // Function to update the map with points and perform triangulation
+    function updateMap() {
+      markersGroup.clearLayers();
+      circlesGroup.clearLayers();
+      triangulationGroup.clearLayers();
+      markers = [];
+      circles = [];
+      document.querySelectorAll('.error').forEach(el => el.textContent = '');
+      
+      const points = [];
+      const distances = [];
+      let hasErrors = false;
+      
+      for (let i = 1; i <= 3; i++) {
+        const lat = parseFloat(document.getElementById(`lat${i}`).value);
+        const lng = parseFloat(document.getElementById(`lng${i}`).value);
+        const distance = parseFloat(document.getElementById(`distance${i}`).value);
+        const coordErrors = validateCoordinates(lat, lng);
+        const distanceErrors = validateDistance(distance);
+        if (coordErrors.length > 0) {
+          document.getElementById(`lat${i}-error`).textContent = coordErrors.join('. ');
+          hasErrors = true;
+        }
+        if (distanceErrors.length > 0) {
+          document.getElementById(`distance${i}-error`).textContent = distanceErrors.join('. ');
+          hasErrors = true;
+        }
+        if (coordErrors.length === 0 && distanceErrors.length === 0) {
+          points.push([lat, lng]);
+          distances.push(distance);
+        }
+      }
+      
+      if (hasErrors) {
+        document.getElementById('results').innerHTML = `
+          <h3>Risultati della Triangolazione</h3>
+          <p>Correggi gli errori sopra per calcolare la triangolazione.</p>
+        `;
+        return;
+      }
+      
+      points.forEach((point, index) => {
+        const marker = L.marker(point, {
+          icon: L.icon({
+            iconUrl: `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='25' height='41' viewBox='0 0 25 41'%3E%3Cpath fill='%230000ff' d='M12.5 0C5.596 0 0 5.596 0 12.5c0 1.886.53 3.743 1.536 5.351 3.157 6.15 10.964 18.851 10.964 23.149 0 0 0 0 0 0 0-4.298 7.807-16.999 10.964-23.149C24.47 16.243 25 14.386 25 12.5 25 5.596 19.404 0 12.5 0zm0 17a4.5 4.5 0 1 1 0-9 4.5 4.5 0 0 1 0 9z'/%3E%3C/svg%3E`,
+            iconSize: [25, 41],
+            iconAnchor: [12.5, 41],
+            popupAnchor: [0, -41]
+          })
+        }).bindPopup(`Punto ${index + 1}: [${point[0].toFixed(4)}, ${point[1].toFixed(4)}]<br>Distanza: ${distances[index]} km`)
+          .addTo(markersGroup);
+        
+        markers.push(marker);
+        
+        const circle = L.circle(point, {
+          radius: distances[index] * 1000,
+          color: 'blue',
+          fillColor: '#0000ff',
+          fillOpacity: 0.1,
+          weight: 2
+        }).addTo(circlesGroup);
+        
+        circles.push(circle);
+      });
+      
+      try {
+        const triangulatedPoint = trilaterate(points[0], points[1], points[2], distances[0], distances[1], distances[2]);
+        triangulationMarker = L.marker(triangulatedPoint, {
+          icon: L.icon({
+            iconUrl: `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='25' height='41' viewBox='0 0 25 41'%3E%3Cpath fill='%23ff0000' d='M12.5 0C5.596 0 0 5.596 0 12.5c0 1.886.53 3.743 1.536 5.351 3.157 6.15 10.964 18.851 10.964 23.149 0 0 0 0 0 0 0-4.298 7.807-16.999 10.964-23.149C24.47 16.243 25 14.386 25 12.5 25 5.596 19.404 0 12.5 0zm0 17a4.5 4.5 0 1 1 0-9 4.5 4.5 0 0 1 0 9z'/%3E%3C/svg%3E`,
+            iconSize: [25, 41],
+            iconAnchor: [12.5, 41],
+            popupAnchor: [0, -41]
+          })
+        }).bindPopup(`Punto Triangolato: [${triangulatedPoint[0].toFixed(6)}, ${triangulatedPoint[1].toFixed(6)}]`)
+          .addTo(triangulationGroup);
+        
+        const actualDistances = points.map((point, index) => {
+          const d = calculateDistance(triangulatedPoint[0], triangulatedPoint[1], point[0], point[1]);
+          return {
+            pointIndex: index + 1,
+            expected: distances[index],
+            actual: d,
+            error: Math.abs(d - distances[index])
+          };
+        });
+        
+        document.getElementById('results').innerHTML = `
+          <h3>Risultati della Triangolazione</h3>
+          <p><strong>Posizione Triangolata:</strong> ${triangulatedPoint[0].toFixed(6)}, ${triangulatedPoint[1].toFixed(6)}</p>
+          <h4>Verifica delle Distanze:</h4>
+          <ul>
+            ${actualDistances.map(d => `
+              <li>Punto ${d.pointIndex}: Attesa ${d.expected.toFixed(2)} km, Reale ${d.actual.toFixed(2)} km (Errore: ${d.error.toFixed(2)} km)</li>
+            `).join('')}
+          </ul>
+          
+        `;
+        
+        const group = L.featureGroup([...markers, triangulationMarker]);
+        map.fitBounds(group.getBounds().pad(0.5));
+      } catch (error) {
+        console.error("Errore di triangolazione:", error);
+        document.getElementById('results').innerHTML = `
+          <h3>Risultati della Triangolazione</h3>
+          <p>Errore: Impossibile calcolare la triangolazione. Controlla che i tuoi cerchi di distanza abbiano un punto di intersezione.</p>
+        `;
+        const group = L.featureGroup(markers);
+        map.fitBounds(group.getBounds().pad(0.5));
+      }
+    }
+    
+    function toggleCircles() {
+      if (map.hasLayer(circlesGroup)) {
+        map.removeLayer(circlesGroup);
+      } else {
+        map.addLayer(circlesGroup);
+      }
+    }
+    
+    updateMap();
+    document.getElementById('update-map').addEventListener('click', updateMap);
+    document.getElementById('toggle-circles').addEventListener('click', toggleCircles);
+  </script>
+</body>
+</html>
