@@ -428,7 +428,9 @@
             setTimeout(() => {
                 loader.style.display = 'none';
                 results.style.display = 'block';
-                
+                document.querySelectorAll('.results-table').forEach(table => {
+                        table.style.display = 'none';
+                    });
                 if (name === 'davide neri') {
                     noResults.style.display = 'none';
                     document.getElementById('results-table1').style.display = 'table';
@@ -441,13 +443,11 @@
                 }
                 else {
                     noResults.style.display = 'block';
-                    document.querySelectorAll('.results-table').forEach(table => {
-                        table.style.display = 'none';
-                    });
+                    
                     
                     countElement.textContent = '0 risultati';
                 }
-            }, 200);
+            }, 2000);
         }
         
         function clearSearch() {
