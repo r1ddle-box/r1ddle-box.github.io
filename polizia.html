@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Polizia di Stato</title>
+    <link rel="icon" type="image/x-icon" href="https://i.postimg.cc/nhJhcbVJ/badge.png?">
+    <style>
+        /* Reset base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f0f2f5;
+            color: #333;
+        }
+        
+        /* Header */
+        header {
+            background-color: #003366;
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 4px solid #ffcc00;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo img {
+            height: 60px;
+            margin-right: 15px;
+        }
+        
+        .logo h1 {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+            font-size: 0.9rem;
+        }
+        
+        .user-info .badge {
+            background-color: #ffcc00;
+            color: #003366;
+            padding: 4px 8px;
+            border-radius: 3px;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+        
+        /* Main Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* Search Section */
+        .search-section {
+            background-color: white;
+            border-radius: 6px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            padding: 25px;
+            margin-bottom: 25px;
+        }
+        
+        .search-section h2 {
+            color: #003366;
+            margin-bottom: 20px;
+            font-weight: 600;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #dee2e6;
+        }
+        
+        .search-form {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .search-row {
+            display: flex;
+            margin-bottom: 15px;
+            gap: 15px;
+        }
+        
+        .form-group {
+            flex: 1;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+            color: #555;
+        }
+        
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .button-group {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        button {
+            padding: 10px 18px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background-color 0.2s;
+        }
+        
+        button.clear {
+            background-color: #e9ecef;
+            color: #495057;
+        }
+        
+        button.search {
+            background-color: #003366;
+            color: white;
+        }
+        
+        button:hover {
+            opacity: 0.9;
+        }
+        
+        /* Results Section */
+        .results-section {
+            background-color: white;
+            border-radius: 6px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            padding: 25px;
+            display: none;
+        }
+        
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #dee2e6;
+        }
+        
+        .results-header h2 {
+            color: #003366;
+            font-weight: 600;
+        }
+        
+        .results-count {
+            background-color: #f8f9fa;
+            padding: 4px 8px;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            color: #6c757d;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        thead {
+            background-color: #f8f9fa;
+        }
+        
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #dee2e6;
+        }
+        
+        th {
+            font-weight: 600;
+            color: #495057;
+        }
+        
+        tbody tr {
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        
+        tbody tr:hover {
+            background-color: #f1f3f5;
+        }
+        
+        .file-link {
+            color: #0066cc;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+        
+        .no-results {
+            text-align: center;
+            padding: 30px;
+            color: #6c757d;
+        }
+        
+        .no-results i {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            color: #adb5bd;
+        }
+        
+        .no-results p {
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+        }
+        
+        .no-results small {
+            font-size: 0.9rem;
+        }
+        
+        /* Badges */
+        .status {
+            padding: 4px 8px;
+            border-radius: 3px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            text-transform: uppercase;
+        }
+        
+        .status.warning {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+
+        .status.success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        
+        .status.danger {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        
+        /* Loader */
+        .loader {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .loader-spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #003366;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 10px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Footer */
+        footer {
+            margin-top: 40px;
+            padding: 15px 0;
+            text-align: center;
+            font-size: 0.8rem;
+            color: #6c757d;
+            border-top: 1px solid #dee2e6;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="https://placehold.co/100x60/003366/FFFFFF.png?text=POLIZIA" alt="Logo Polizia di Stato">
+            <h1>Database Centrale<br>Polizia di Stato</h1>
+        </div>
+        <div class="user-info">
+            <span class="badge">LIVELLO 3</span>
+            <span>Agente:  #4827 | <a href="#" style="color: white; text-decoration: underline;">Logout</a></span>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="search-section">
+            <h2>Ricerca Soggetti</h2>
+            <div class="search-form">
+                <div class="search-row">
+                    <div class="form-group">
+                        <label for="name">Nome e Cognome</label>
+                        <input type="text" id="name" placeholder="Es. Mario Rossi">
+                    </div>
+                    <div class="form-group">
+                        <label for="cf">Codice Fiscale</label>
+                        <input type="text" id="cf" placeholder="Es. RSSMRA80A01H501U">
+                    </div>
+                </div>
+                <div class="search-row">
+                    <div class="form-group">
+                        <label for="birthdate">Data di Nascita</label>
+                        <input type="date" id="birthdate">
+                    </div>
+                    <div class="form-group">
+                        <label for="birthplace">Luogo di Nascita</label>
+                        <input type="text" id="birthplace" placeholder="Es. Roma">
+                    </div>
+                    <div class="form-group">
+                        <label for="category">Categoria</label>
+                        <select id="category">
+                            <option value="">Tutte le categorie</option>
+                            <option value="1">Precedenti penali</option>
+                            <option value="2">Persone scomparse</option>
+                            <option value="3">Indagini in corso</option>
+                            <option value="4">Sorveglianza speciale</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="button-group">
+                    <button type="button" class="clear" onclick="clearSearch()">Cancella</button>
+                    <button type="button" class="search" onclick="performSearch()">Cerca</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="loader" id="loader">
+            <div class="loader-spinner"></div>
+            <p>Ricerca in corso...</p>
+        </div>
+        
+        <div class="results-section" id="results">
+            <div class="results-header">
+                <h2>Risultati Ricerca</h2>
+                <span class="results-count" id="count">0 risultati</span>
+            </div>
+            
+            <div id="no-results" class="no-results">
+                <i>🔍</i>
+                <p>Nessun risultato trovato</p>
+                <small>Prova a modificare i criteri di ricerca</small>
+            </div>
+            
+            <table id="results-table1" class="results-table" style="display: none;">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nome</th>
+                        <th>Data di Nascita</th>
+                        <th>Codice Fiscale</th>
+                        <th>Stato</th>
+                        <th>Documenti</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr onclick="expandRow(this)">
+                        <td>P-17283</td>
+                        <td>Davide Neri</td>
+                        <td>12/01/1997</td>
+                        <td>NREDVD97A12F205Q</td>
+                        <td><span class="status warning">SORVEGLIATO</span></td>
+                        <td><a href="/?p=p17283" class="file-link" target="_blank">Relazione Medica Psichiatrica</a></td>
+                    </tr>
+                    
+                </tbody>
+            </table>
+            <table id="results-table2" class="results-table" style="display: none;">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nome</th>
+                        <th>Data di Nascita</th>
+                        <th>Codice Fiscale</th>
+                        <th>Stato</th>
+                        <th>Documenti</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr onclick="expandRow(this)">
+                        <td>P-16234</td>
+                        <td>Andrea Rizzo</td>
+                        <td>17/07/1986</td>
+                        <td>RZZNDR86L17F205H</td>
+                        <td><span class="status success">INCENSURATO</span></td>
+                        <td><a href="/?p=p16234" class="file-link" target="_blank">Rapporto Investigativo</a></td>
+                    </tr>
+                    
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+    <footer>
+        Sistema Database Centrale Polizia di Stato v4.2.1 | Accesso riservato al personale autorizzato | &copy; 2023 Ministero dell'Interno
+    </footer>
+    
+    <script>
+        function performSearch() {
+            const name = document.getElementById('name').value.trim().toLowerCase();
+            const loader = document.getElementById('loader');
+            const results = document.getElementById('results');
+            const noResults = document.getElementById('no-results');
+            const resultsTable = document.getElementById('results-table');
+            const countElement = document.getElementById('count');
+            
+            // Mostra loader
+            results.style.display = 'none';
+            loader.style.display = 'block';
+            
+            // Simula ricerca con ritardo
+            setTimeout(() => {
+                loader.style.display = 'none';
+                results.style.display = 'block';
+                
+                if (name === 'davide neri') {
+                    noResults.style.display = 'none';
+                    document.getElementById('results-table1').style.display = 'table';
+                    countElement.textContent = '1 risultato';
+                } 
+                else if (name === 'andrea rizzo') {
+                    noResults.style.display = 'none';
+                    document.getElementById('results-table2').style.display = 'table';
+                    countElement.textContent = '1 risultato'; 
+                }
+                else {
+                    noResults.style.display = 'block';
+                    document.querySelectorAll('.results-table').forEach(table => {
+                        table.style.display = 'none';
+                    });
+                    
+                    countElement.textContent = '0 risultati';
+                }
+            }, 200);
+        }
+        
+        function clearSearch() {
+            document.getElementById('name').value = '';
+            document.getElementById('cf').value = '';
+            document.getElementById('birthdate').value = '';
+            document.getElementById('birthplace').value = '';
+            document.getElementById('category').selectedIndex = 0;
+            document.getElementById('results').style.display = 'none';
+        }
+        
+        function expandRow(row) {
+            // In un'implementazione reale, qui si espanderebbero dettagli aggiuntivi
+            console.log("Riga cliccata:", row.cells[1].textContent);
+        }
+        
+        
+    </script>
+</body>
+</html>
