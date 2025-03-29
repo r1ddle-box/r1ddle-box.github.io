@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <title>Relazione Medica Psichiatrica - Davide Neri</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+            background-color: white;
+            font-size: 12pt;
+            line-height: 1.5;
+        }
+        .container {
+            max-width: 210mm; /* A4 width */
+            margin: 0 auto;
+            padding: 0 10mm;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #2c3e50;
+            padding-bottom: 10px;
+        }
+        .header h1 {
+            color: #2c3e50;
+            margin-bottom: 5px;
+            font-size: 18pt;
+        }
+        .header p {
+            color: #7f8c8d;
+            margin: 5px 0;
+            font-size: 11pt;
+        }
+        .patient-info {
+            margin-bottom: 20px;
+            border: 1px solid #e0e0e0;
+            padding: 10px;
+            background-color: #f9f9f9;
+        }
+        .section {
+            margin-bottom: 20px;
+        }
+        .section h2 {
+            color: #2c3e50;
+            border-bottom: 1px solid #e0e0e0;
+            padding-bottom: 5px;
+            font-size: 14pt;
+        }
+        .section p {
+            text-align: justify;
+        }
+        .footer {
+            margin-top: 30px;
+            border-top: 1px solid #e0e0e0;
+            padding-top: 10px;
+            text-align: right;
+            font-style: italic;
+            page-break-inside: avoid;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        table, th, td {
+            border: 1px solid #e0e0e0;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .confidential {
+            color: red;
+            font-weight: bold;
+            text-align: center;
+            margin: 10px 0;
+            font-size: 14pt;
+        }
+        .signature {
+            margin-top: 40px;
+            page-break-inside: avoid;
+        }
+        .signature p {
+            margin-bottom: 40px;
+        }
+        .signature .sign-line {
+            border-top: 1px solid #000;
+            width: 200px;
+            margin-top: 5px;
+            text-align: center;
+        }
+        @media print {
+            body {
+                font-size: 12pt;
+                background-color: white;
+                color: black;
+            }
+            .container {
+                width: 100%;
+                padding: 0;
+            }
+            @page {
+                size: A4;
+                margin: 2cm;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>RELAZIONE MEDICA PSICHIATRICA</h1>
+            <p>IRCSS Ospedale San Raffaele Turro</p>
+            <p>Via Stamira d'Ancona, 20 - 20127 Milano</p>
+            <p>Tel: 06-123456789 | Email: csm@sandonato.it</p>
+        </div>
+
+        <div class="confidential">DOCUMENTO RISERVATO E CONFIDENZIALE</div>
+
+        <div class="patient-info">
+            <table>
+                <tr>
+                    <th width="30%">Paziente:</th>
+                    <td>Neri Davide</td>
+                </tr>
+                <tr>
+                    <th>Data di nascita:</th>
+                    <td>12 Gennaio 1997</td>
+                </tr>
+                <tr>
+                    <th>Codice Paziente:</th>
+                    <td>DNP-2025-0342</td>
+                </tr>
+                <tr>
+                    <th>Data relazione:</th>
+                    <td>23 Marzo 2025</td>
+                </tr>
+                <tr>
+                    <th>Medico:</th>
+                    <td>Dott.ssa Elena Bianchi</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="section">
+            <h2>1. Storia di tossicodipendenza</h2>
+            <p>Il paziente Sig. Neri Davide presenta una storia clinica caratterizzata da poliabuso di sostanze, iniziata approssimativamente all'età di 18 anni. La documentazione indica un uso prolungato di stimolanti (principalmente cocaina) e oppioidi (inizialmente tramite abuso di analgesici prescritti, successivamente eroina). Il paziente ha effettuato tre tentativi di disintossicazione negli ultimi cinque anni, con periodi di astinenza variabili tra i 2 e gli 8 mesi.</p>
+            <p>Questo quadro di dipendenza cronica contribuisce significativamente al comportamento imprevedibile del paziente, caratterizzato da oscillazioni dell'umore, impulsività e difficoltà nel mantenere impegni. I periodi di intossicazione acuta si manifestano con agitazione psicomotoria, pensiero disorganizzato e talvolta comportamenti aggressivi verbali. Durante l'astinenza si osservano invece irritabilità, anedonia e sintomi depressivi che aumentano il rischio di ricaduta.</p>
+            <p>La tossicodipendenza ha influito negativamente sulla capacità del paziente di mantenere relazioni stabili, impiego continuativo e ha compromesso la sua aderenza al piano terapeutico. L'imprevedibilità comportamentale del Sig. Neri appare direttamente correlata alle fasi del ciclo di abuso, astinenza e ricaduta.</p>
+        </div>
+
+        <div class="section">
+            <h2>2. Prescrizioni psichiatriche recenti</h2>
+            <p>Il paziente è attualmente in trattamento con la seguente terapia farmacologica:</p>
+            <table>
+                <tr>
+                    <th>Farmaco</th>
+                    <th>Dosaggio</th>
+                    <th>Posologia</th>
+                    <th>Data prescrizione</th>
+                </tr>
+                <tr>
+                    <td>Quetiapina</td>
+                    <td>300 mg</td>
+                    <td>1 compressa serale</td>
+                    <td>02/02/2025</td>
+                </tr>
+                <tr>
+                    <td>Sertralina</td>
+                    <td>100 mg</td>
+                    <td>1 compressa mattutina</td>
+                    <td>02/02/2025</td>
+                </tr>
+                <tr>
+                    <td>Lorazepam</td>
+                    <td>1 mg</td>
+                    <td>1 compressa al bisogno (max 3/die)</td>
+                    <td>15/02/2025</td>
+                </tr>
+                <tr>
+                    <td>Valproato di sodio</td>
+                    <td>500 mg</td>
+                    <td>1 compressa mattino e sera</td>
+                    <td>28/02/2025</td>
+                </tr>
+            </table>
+            <p>L'attuale regime farmacologico è indicativo di un quadro clinico complesso caratterizzato da instabilità dell'umore con componenti d'ansia, depressione e disturbi del sonno. Le frequenti modifiche terapeutiche (tre aggiustamenti nell'ultimo mese) suggeriscono difficoltà nel raggiungere la stabilizzazione sintomatologica.</p>
+            <p>Il paziente ha riportato irregolarità nell'assunzione dei farmaci, riferendo di interrompere frequentemente l'assunzione durante i periodi di utilizzo di sostanze, compromettendo l'efficacia del trattamento. Gli effetti collaterali riferiti (principalmente sedazione diurna e incremento ponderale) hanno contribuito alla scarsa aderenza terapeutica.</p>
+            <p>La presenza di un trattamento con stabilizzatori dell'umore, antidepressivi e antipsicotici atipici è indicativa di un quadro di instabilità emotiva e comportamentale significativa che richiede un approccio farmacologico multimodale.</p>
+        </div>
+
+        <div class="section">
+            <h2>3. Appuntamento mancato</h2>
+            <p>Si segnala che il paziente non si è presentato all'appuntamento programmato per il giorno 14 marzo 2025. Questo rappresenta la terza assenza consecutiva agli incontri di follow-up previsti dal piano terapeutico. I tentativi di contatto telefonico effettuati il 14 e 16 marzo sono risultati infruttuosi.</p>
+            <p>La mancata aderenza al programma di visite è particolarmente preoccupante considerando la recente modifica del regime farmacologico e la necessità di monitorare i livelli plasmatici del valproato. Il pattern di appuntamenti mancati coincide con i periodi di presunta ripresa dell'abuso di sostanze, come evidenziato dal precedente monitoraggio.</p>
+            <p>È stato inviato un avviso scritto al domicilio del paziente e sono stati informati i servizi sociali di riferimento, come da protocollo per pazienti con doppia diagnosi e storia di scarsa compliance.</p>
+        </div>
+
+        <div class="section">
+            <h2>Conclusioni e piano d'azione</h2>
+            <p>Il quadro clinico del Sig. Neri Davide è caratterizzato da significativa instabilità psicopatologica, con elementi comportamentali imprevedibili riconducibili alla coesistenza di disturbo da uso di sostanze e patologia psichiatrica di base. L'attuale regime terapeutico non ha ancora raggiunto un'efficacia ottimale, in parte a causa della scarsa aderenza e delle frequenti interruzioni.</p>
+            <p>Si raccomanda:</p>
+            <ol>
+                <li>Intensificazione dei contatti con i servizi territoriali per recuperare il contatto con il paziente</li>
+                <li>Valutazione dell'opportunità di un trattamento in regime di ricovero o semiresidenziale per stabilizzazione</li>
+                <li>Coinvolgimento dei familiari (previa autorizzazione) nel piano terapeutico</li>
+                <li>Considerazione di opzioni farmacologiche a lunga durata d'azione che possano migliorare l'aderenza</li>
+                <li>Programmazione di una rivalutazione completa non appena il paziente si renderà disponibile</li>
+            </ol>
+        </div>
+
+        <div class="signature">
+            <p>Data: 23/03/2025</p>
+            <div style="display: flex; justify-content: space-between;">
+                <div>
+                    <p>Il Medico Psichiatra</p>
+                    <p class="sign-line">Dott.ssa Elena Bianchi</p>
+                </div>
+                <div>
+                    <p>Il Direttore dell'Unità Operativa</p>
+                    <p class="sign-line">Prof. Marco Rossi</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>Questo documento contiene informazioni mediche riservate. La divulgazione non autorizzata è vietata ai sensi del GDPR e del D.Lgs. 196/2003.</p>
+        </div>
+    </div>
+</body>
+</html>
