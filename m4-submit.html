@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Word Checker</title>
+    <style>
+        :root {
+            --primary: #3498db;
+            --success: #2ecc71;
+            --error: #e74c3c;
+            --dark: #34495e;
+            --light: #ecf0f1;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #8e44ad, #3498db);
+            padding: 20px;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 500px;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            padding: 30px;
+            transition: all 0.3s ease;
+        }
+        h1.title{
+            color: var(--light);
+            text-align: center;
+            margin-bottom: 20px;
+            font-weight: 600;
+            font-size: 40px;
+            text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3)
+        }
+        h2 {
+            color: var(--dark);
+            text-align: center;
+            margin-bottom: 30px;
+            font-weight: 600;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+            position: relative;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+        
+        .form-control:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+        }
+        
+        .btn {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            background-color: var(--primary);
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+        }
+        
+        .btn:active {
+            transform: translateY(0);
+        }
+        
+        .message {
+            margin-top: 20px;
+            padding: 12px;
+            border-radius: 8px;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .message.error {
+            background-color: rgba(231, 76, 60, 0.2);
+            color: var(--error);
+            opacity: 1;
+        }
+        
+        .message.success {
+            background-color: rgba(46, 204, 113, 0.2);
+            color: var(--success);
+            opacity: 1;
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1 class="title">Milano Underground: codice Metro</h1>
+    
+    <div class="container">
+        <h2>Inserisci nome e cognome del/i colpevole/i</h2>
+        <form id="wordForm">
+            <div class="form-group">
+                <input 
+                    type="text" 
+                    class="form-control" 
+                    id="textInput" 
+                    placeholder="Scrivi qui..." 
+                    autocomplete="off"
+                    required
+                >
+            </div>
+            <button type="submit" class="btn">Invia</button>
+        </form>
+        <div id="message" class="message"></div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const targetWords = ['davide', 'neri', 'riccardo', 'fontana'];
+            
+            const redirectUrl = 'https://example.com/success';
+            
+            const form = document.getElementById('wordForm');
+            const textInput = document.getElementById('textInput');
+            const messageBox = document.getElementById('message');
+            
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Reset message
+                messageBox.className = 'message';
+                messageBox.textContent = '';
+                
+                const inputText = textInput.value.trim();
+                
+                // Split by commas and whitespace
+                const words = inputText.split(/[\s,]+/).filter(word => word.length > 0);
+                
+                // Check if the words contain exactly the four target words (order doesn't matter)
+                const foundWords = [];
+                let hasAllTargetWords = true;
+                
+                // Check that all target words are present
+                for (const targetWord of targetWords) {
+                    if (!words.includes(targetWord)) {
+                        hasAllTargetWords = false;
+                        break;
+                    }
+                    foundWords.push(targetWord);
+                }
+                
+                // Check if there are exactly the right number of words
+                const exactMatch = hasAllTargetWords && words.length === targetWords.length;
+                
+                if (exactMatch) {
+                    // Show success message before redirecting
+                    messageBox.textContent = 'Perfect match! Redirecting...';
+                    messageBox.className = 'message success';
+                    
+                    // Redirect after a short delay
+                    setTimeout(() => {
+                        window.location.href = redirectUrl;
+                    }, 1000);
+                } else {
+                    messageBox.textContent = 'Errato. Puoi ritentare.';
+                    
+                    messageBox.className = 'message error';
+                }
+            });
+            
+            // Clear error message when input changes
+            textInput.addEventListener('input', function() {
+                messageBox.className = 'message';
+                messageBox.textContent = '';
+            });
+        });
+    </script>
+</body>
+</html>
