@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scambio di Email - Gioco di Ruolo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+        }
+        .email-container {
+            max-width: 700px;
+            margin: 0 auto;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        .email-header {
+            background-color: #0078d4;
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .email-header h1 {
+            margin: 0;
+            font-size: 20px;
+        }
+        .email-list {
+            padding: 0;
+        }
+        .email-item {
+            border-bottom: 1px solid #eee;
+            padding: 15px 20px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .email-item:hover {
+            background-color: #f9f9f9;
+        }
+        .email-item.unread {
+            background-color: #f0f7ff;
+        }
+        .email-item.unread:hover {
+            background-color: #e5f0ff;
+        }
+        .email-sender {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .email-subject {
+            margin-bottom: 8px;
+        }
+        .email-preview {
+            color: #666;
+            font-size: 14px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .email-time {
+            font-size: 12px;
+            color: #999;
+            text-align: right;
+            margin-top: 5px;
+        }
+        .email-content {
+            padding: 20px;
+            display: none;
+        }
+        .email-content.active {
+            display: block;
+        }
+        .email-actions {
+            padding: 10px 20px;
+            border-top: 1px solid #eee;
+            display: flex;
+            gap: 10px;
+        }
+        .btn {
+            padding: 8px 12px;
+            background-color: #0078d4;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .btn:hover {
+            background-color: #0063b1;
+        }
+        .email-content-header {
+            border-bottom: 1px solid #eee;
+            padding-bottom: 15px;
+            margin-bottom: 15px;
+        }
+        .email-content-body {
+            line-height: 1.6;
+        }
+        .signature {
+            margin-top: 20px;
+            padding-top: 10px;
+            border-top: 1px solid #eee;
+            font-size: 14px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <div class="email-header">
+            <h1>Posta in arrivo - phantom-dev@proton.me</h1>
+        </div>
+        
+        <div class="email-list">
+            <div class="email-item unread" >
+                <div class="email-sender">Dr.ssa Elena Bianchi &lt;e.bianchi@centromedico.it&gt;</div>
+                <div class="email-subject">Promemoria: Appuntamento del 28 Febbraio</div>
+                <div class="email-preview">Gentile Sig. Neri, Le ricordo che il nostro appuntamento è fissato per venerdì 28 Febbraio alle ore 15:30...</div>
+                <div class="email-time">27 Febbraio, 09:45</div>
+            </div>
+            
+            <div class="email-item" >
+                <div class="email-sender">Dr.ssa Elena Bianchi &lt;e.bianchi@centromedico.it&gt;</div>
+                <div class="email-subject">Risultati analisi sangue</div>
+                <div class="email-preview">Gentile Sig. Neri, in allegato troverà i risultati delle analisi del sangue effettuate la scorsa settimana...</div>
+                <div class="email-time">3 Marzo, 16:22</div>
+            </div>
+            
+            <div class="email-item" >
+                <div class="email-sender">Dr.ssa Elena Bianchi &lt;e.bianchi@centromedico.it&gt;</div>
+                <div class="email-subject">Conferma appuntamento</div>
+                <div class="email-preview">Gentile Sig. Neri, con la presente confermo la prenotazione della visita di controllo...</div>
+                <div class="email-time">6 Marzo, 14:08</div>
+            </div>
+        </div>
+        
+        <div id="email1" class="email-content">
+            <div class="email-content-header">
+                <div><strong>Da:</strong> Dr.ssa Elena Bianchi &lt;e.bianchi@centromedico.it&gt;</div>
+                <div><strong>A:</strong> Davide Neri &lt;phantom-dev@proton.me&gt;</div>
+                <div><strong>Oggetto:</strong> Promemoria: Appuntamento del 14 Marzo</div>
+                <div><strong>Data:</strong> 13 Marzo 2025, 09:45</div>
+            </div>
+            <div class="email-content-body">
+                <p>Gentile Sig. Neri,</p>
+                
+                <p>Le ricordo che il nostro appuntamento è fissato per venerdì 14 Marzo alle ore 15:30 presso il Centro Medico San Matteo, Studio 3B.</p>
+                
+                <p>Per questo controllo di follow-up, La prego di portare con sé:</p>
+                <ul>
+                    <li>Documenti d'identità e tessera sanitaria</li>
+                    <li>Eventuali referti di esami o visite specialistiche effettuate dopo il nostro ultimo incontro</li>
+                    <li>L'elenco aggiornato dei farmaci che sta assumendo</li>
+                </ul>
+                
+                <p>Come discusso durante la nostra ultima visita, valuteremo i progressi del trattamento e discuteremo degli eventuali aggiustamenti necessari.</p>
+                
+                <p>Se dovesse avere necessità di spostare l'appuntamento, La prego di contattare la segreteria al numero 02-5567890 con almeno 24 ore di anticipo.</p>
+                
+                <p>Cordiali saluti,</p>
+                
+                <div class="signature">
+                    <p>Dr.ssa Elena Bianchi<br>
+                    Specialista in Medicina Interna<br>
+                    Centro Medico San Matteo<br>
+                    Tel: 02-5567892<br>
+                    e.bianchi@centromedico.it</p>
+                </div>
+            </div>
+        </div>
+        
+        <div id="email2" class="email-content">
+            <div class="email-content-header">
+                <div><strong>Da:</strong> Dr.ssa Elena Bianchi &lt;e.bianchi@centromedico.it&gt;</div>
+                <div><strong>A:</strong> Davide Neri &lt;phantom-dev@proton.me&gt;</div>
+                <div><strong>Oggetto:</strong> Risultati analisi sangue</div>
+                <div><strong>Data:</strong> 7 Marzo 2025, 16:22</div>
+            </div>
+            <div class="email-content-body">
+                <p>Gentile Sig. Neri,</p>
+                
+                <p>in allegato troverà i risultati delle analisi del sangue effettuate la scorsa settimana.</p>
+                
+                <p>Ho esaminato personalmente i dati e ho notato alcuni valori che meritano la nostra attenzione durante il prossimo appuntamento. In particolare, i livelli di [PARAMETRO FITTIZIO] risultano leggermente alterati, probabilmente in relazione al trattamento in corso.</p>
+                
+                <p>Non c'è motivo di preoccupazione immediata, ma sarà importante discuterne durante la visita di controllo del 10 Aprile.</p>
+                
+                <p>Nel frattempo, Le consiglio di continuare con la terapia prescritta senza modifiche.</p>
+                
+                <p>A presto,</p>
+                
+                <div class="signature">
+                    <p>Dr.ssa Elena Bianchi<br>
+                    Specialista in Medicina Interna<br>
+                    Centro Medico San Matteo<br>
+                    Tel: 02-5567892<br>
+                    e.bianchi@centromedico.it</p>
+                </div>
+            </div>
+        </div>
+        
+        <div id="email3" class="email-content">
+            <div class="email-content-header">
+                <div><strong>Da:</strong> Dr.ssa Elena Bianchi &lt;e.bianchi@centromedico.it&gt;</div>
+                <div><strong>A:</strong> Davide Neri &lt;phantom-dev@proton.me&gt;</div>
+                <div><strong>Oggetto:</strong> Conferma appuntamento</div>
+                <div><strong>Data:</strong> 14 Marzo 2025, 14:08</div>
+            </div>
+            <div class="email-content-body">
+                <p>Gentile Sig. Neri,</p>
+                
+                <p>con la presente confermo la prenotazione della visita di controllo per il giorno giovedì 10 Aprile alle ore 15:30.</p>
+                
+                <p>Come concordato telefonicamente, durante questo incontro valuteremo il protocollo terapeutico in corso e discuteremo i risultati delle recenti analisi.</p>
+                
+                <p>La avviso che abbiamo recentemente modificato l'ubicazione del mio studio, che ora si trova al terzo piano, Studio 3B (seguire le indicazioni per il reparto di Medicina Interna).</p>
+                
+                <p>Riceverà un promemoria della visita alcuni giorni prima dell'appuntamento.</p>
+                
+                <p>Per qualsiasi esigenza o domanda, non esiti a contattarmi.</p>
+                
+                <p>Cordiali saluti,</p>
+                
+                <div class="signature">
+                    <p>Dr.ssa Elena Bianchi<br>
+                    Specialista in Medicina Interna<br>
+                    Centro Medico San Matteo<br>
+                    Tel: 02-5567892<br>
+                    e.bianchi@centromedico.it</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="email-actions">
+            <button class="btn" onclick="composeEmail()">Rispondi</button>
+            <button class="btn" onclick="forwardEmail()">Inoltra</button>
+        </div>
+    </div>
+
+    <script>
+        function showEmail(emailId) {
+            // Hide all email contents
+            const allEmails = document.querySelectorAll('.email-content');
+            allEmails.forEach(email => {
+                email.classList.remove('active');
+            });
+            
+            // Show selected email
+            document.getElementById(emailId).classList.add('active');
+            
+            // Mark as read if unread
+            const clickedItem = document.querySelector('.email-item.unread');
+            if (clickedItem) {
+                clickedItem.classList.remove('unread');
+            }
+        }
+        
+        
+        
+        // Show the first email by default
+        document.addEventListener('DOMContentLoaded', function() {
+            showEmail('email1');
+        });
+    </script>
+</body>
+</html>
