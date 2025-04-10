@@ -1,0 +1,1251 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Riddle Box</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Reset and base styles */
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #1a2e47;      /* Sostituito il viola con blu scuro */
+            --secondary: #3a7ca5;    /* Sostituito con blu medio */
+            --accent: #e67e22;       /* Sostituito con arancione */
+            --text: #f0f0f0;
+            --dark: #0b1218;         /* Scuro blu invece di viola scuro */
+            --light: #f9f9f9;
+            --gold: #d4af37;
+            --gold-light: #f9d77e;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background-color: var(--dark);
+            overflow-x: hidden;
+            text-align: center;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 28px;
+            background: var(--secondary);
+            color: var(--light);
+            border: 2px solid var(--gold);
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+        }
+
+        .btn:hover {
+            background: var(--accent);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(212, 175, 55, 0.3);
+            border-color: var(--gold-light);
+        }
+
+        /* Typography */
+        h1, h2, h3, h4, h5, h6 {
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            margin-bottom: 25px;
+        }
+
+        h3 {
+            font-size: 1.75rem;
+        }
+
+        p {
+            margin-bottom: 20px;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .section-title {
+            position: relative;
+            display: inline-block;
+            padding-bottom: 15px;
+            margin-bottom: 50px;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            margin: 0 auto;
+            width: 50px;
+            height: 3px;
+            background: var(--gold);
+        }
+
+        /* Header and Navigation */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background-color: rgba(11, 18, 24, 0.9);
+            padding: 20px 0;
+            transition: all 0.3s ease-in-out;
+            border-bottom: 1px solid var(--gold);
+        }
+
+        header.scrolled {
+            padding: 10px 0;
+            background-color: rgba(11, 18, 24, 0.95);
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.2);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--light);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        .logo-img {
+            height: 40px;
+            width: auto;
+            margin-right: 10px;
+            vertical-align: middle;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--light);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .logo span {
+            color: var(--gold);
+        }
+
+        nav ul {
+            display: flex;
+        }
+
+        nav ul li {
+            margin-left: 30px;
+        }
+
+        nav ul li a {
+            color: var(--light);
+            font-weight: 600;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--gold);
+            transition: width 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: var(--gold);
+        }
+
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+
+        .mobile-menu-toggle {
+            display: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: var(--light);
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            background-image: linear-gradient(rgba(11, 18, 24, 0.7), rgba(11, 18, 24, 0.7)), url('https://i.postimg.cc/26LFM0pf/pexels-cottonbro-8369520.webp ');
+            /*background-image: linear-gradient(rgba(11, 18, 24, 0.7), rgba(11, 18, 24, 0.7)), url('https://images.unsplash.com/photo-1553481187-be93c21490a9?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');*/
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .hero h1 {
+            color: var(--light);
+            margin-bottom: 25px;
+            animation: fadeInUp 1s ease-out;
+            text-shadow: 2px 2px 4px var(--gold-light);
+        }
+
+        .hero p {
+            color: var(--light);
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+            animation: fadeInUp 1s ease-out 0.2s forwards;
+            opacity: 0;
+        }
+
+        .hero-btn {
+            animation: fadeInUp 1s ease-out 0.4s forwards;
+            opacity: 0;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                transform: translateY(40px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .scroll-down {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: var(--gold);
+            font-size: 1.5rem;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0) translateX(-50%);
+            }
+            40% {
+                transform: translateY(-30px) translateX(-50%);
+            }
+            60% {
+                transform: translateY(-15px) translateX(-50%);
+            }
+        }
+
+        /* About Section */
+        .about {
+            padding: 100px 0;
+            background-color: var(--primary);
+        }
+
+        .about-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .about-content h2 {
+            position: relative;
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+        }
+
+        .about-content h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 3px;
+            background: var(--gold);
+        }
+
+        /* Products Section */
+        .products {
+            padding: 100px 0;
+            background-color: var(--dark);
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .product-card {
+            background: var(--primary);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid var(--gold-light);
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(212, 175, 55, 0.2);
+        }
+
+        /* MODIFIED: Make product images square */
+        .product-image {
+            width: 100%;
+            padding-bottom: 100%; /* Creates a square aspect ratio */
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-image img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .product-card:hover .product-image img {
+            transform: scale(1.1);
+        }
+
+        .product-info {
+            padding: 25px;
+        }
+
+        .product-info h3 {
+            margin-bottom: 15px;
+            color: var(--light);
+        }
+
+        .product-info p {
+            color: var(--text);
+            margin-bottom: 20px;
+        }
+
+        .product-price {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--gold);
+            margin-bottom: 20px;
+        }
+
+        /* How to Play Section */
+        .how-to-play {
+            padding: 100px 0;
+            background-color: var(--primary);
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .step-item {
+            text-align: center;
+            padding: 30px;
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            transition: transform 0.3s ease;
+            border: 1px solid var(--gold-light);
+        }
+
+        .step-item:hover {
+            transform: translateY(-10px);
+        }
+
+        .step-icon {
+            font-size: 3rem;
+            color: var(--gold);
+            margin-bottom: 20px;
+        }
+
+        .step-number {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            line-height: 40px;
+            text-align: center;
+            background-color: var(--secondary);
+            color: var(--light);
+            border-radius: 50%;
+            margin-bottom: 15px;
+            font-weight: 700;
+            border: 1px solid var(--gold);
+        }
+
+        /* Testimonials Section */
+        .testimonials {
+            padding: 100px 0;
+            background-color: var(--dark);
+        }
+
+        /* Carosello per i feedback - FIXED */
+        .testimonial-carousel {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+            padding: 30px 0;
+        }
+
+        .testimonial-track {
+            display: flex;
+            transition: transform 0.5s ease;
+            width: 100%;
+        }
+
+        .testimonial-item {
+            flex: 0 0 100%;
+            width: 100%;
+            min-width: 100%;
+            padding: 30px;
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            border: 1px solid var(--gold-light);
+            box-sizing: border-box;
+        }
+
+        .testimonial-image {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin: 0 auto 20px;
+            border: 3px solid var(--gold);
+        }
+
+        .testimonial-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .testimonial-text {
+            font-size: 1.2rem;
+            font-style: italic;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .testimonial-text::before,
+        .testimonial-text::after {
+            content: '"';
+            font-size: 3rem;
+            color: var(--gold);
+            position: absolute;
+            opacity: 0.3;
+        }
+
+        .testimonial-text::before {
+            top: -20px;
+            left: -20px;
+        }
+
+        .testimonial-text::after {
+            bottom: -40px;
+            right: -20px;
+        }
+
+        .testimonial-author {
+            font-weight: 700;
+            color: var(--gold);
+        }
+
+        .testimonial-role {
+            font-size: 0.9rem;
+            color: var(--text);
+            opacity: 0.8;
+        }
+
+        .carousel-controls {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .prev-btn, .next-btn {
+            background: none;
+            border: none;
+            color: var(--gold);
+            font-size: 1.5rem;
+            cursor: pointer;
+            margin: 0 10px;
+            transition: all 0.3s ease;
+        }
+
+        .prev-btn:hover, .next-btn:hover {
+            color: var(--gold-light);
+        }
+
+        .carousel-indicators {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.3);
+            margin: 0 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .indicator.active {
+            background-color: var(--gold);
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 100px 0;
+            background-color: var(--primary);
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .contact-info {
+            margin-bottom: 30px;
+            text-align: left;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            background-color: var(--secondary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 20px;
+            font-size: 1.2rem;
+            border: 1px solid var(--gold);
+        }
+
+        .contact-form {
+            text-align: left;
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 1px solid var(--gold-light);
+            border-radius: 5px;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--light);
+        }
+
+        .contact-form textarea {
+            resize: vertical;
+            min-height: 150px;
+        }
+
+        .contact-form input::placeholder,
+        .contact-form textarea::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .contact-form .btn {
+            width: auto;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            padding: 80px 0 30px;
+            border-top: 1px solid var(--gold);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 50px;
+            margin-bottom: 50px;
+        }
+
+        .footer-column h3 {
+            color: var(--light);
+            margin-bottom: 25px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 30px;
+            height: 2px;
+            background: var(--gold);
+        }
+
+        .footer-links li {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        .footer-links a {
+            color: var(--text);
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--gold);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .social-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: var(--light);
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            border: 1px solid var(--gold-light);
+        }
+
+        .social-link:hover {
+            background-color: var(--gold);
+            color: var(--dark);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text);
+            opacity: 0.7;
+            font-size: 0.9rem;
+        }
+
+        /* Parallax Sections */
+        .parallax {
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        .parallax-banner {
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: var(--light);
+            position: relative;
+        }
+
+        .parallax-banner::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(11, 18, 24, 0.7);
+        }
+
+        .parallax-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .parallax-banner-1 {
+            background-image: url('https://images.unsplash.com/photo-1518131672697-613becd4fab5?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+        }
+
+        .parallax-banner-2 {
+            background-image: url('https://images.unsplash.com/photo-1577495508048-b635879837f1?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+        }
+        .footer-column h3 {
+            color: var(--light);
+            margin-bottom: 25px;
+            position: relative;
+            padding-bottom: 10px;
+            text-align: left;  /* Add this line to left-align the titles */
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 1024px) {
+            h1 {
+                font-size: 3rem;
+            }
+            
+            h2 {
+                font-size: 2.2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            h2 {
+                font-size: 2rem;
+            }
+            
+            nav ul {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: var(--primary);
+                flex-direction: column;
+                padding: 20px 0;
+                box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+            }
+            
+            nav ul.active {
+                display: flex;
+            }
+            
+            nav ul li {
+                margin: 0;
+                padding: 15px 0;
+                text-align: center;
+            }
+            
+            .mobile-menu-toggle {
+                display: block;
+            }
+            
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero-content {
+                padding: 0 30px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            h2 {
+                font-size: 1.8rem;
+            }
+            
+            .container {
+                width: 95%;
+                padding: 0 10px;
+            }
+            
+            .btn {
+                padding: 10px 20px;
+                font-size: 0.8rem;
+            }
+            
+            .parallax-banner {
+                height: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header and Navigation -->
+    <header id="header">
+        <div class="container header-container">
+            <div class="logo">
+                <img src="https://i.postimg.cc/d1W8JxGx/riddle-logo.png" alt="RIDDLE BOX Logo" class="logo-img">
+                RIDDLE <span>BOX</span></div>
+            <nav>
+                <ul id="menu">
+                    <li><a href="#hero">Home</a></li>
+                    <li><a href="#about">Chi Siamo</a></li>
+                    <li><a href="#products">Prodotti</a></li>
+                    <li><a href="#how-to-play">Come Giocare</a></li>
+                    <li><a href="#testimonials">Recensioni</a></li>
+                    <li><a href="#contact">Contatti</a></li>
+                </ul>
+            </nav>
+            <div class="mobile-menu-toggle" id="mobile-menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section with Parallax -->
+    <section id="hero" class="hero parallax">
+        <div class="hero-content">
+            <h1>Risolvi Misteri. Vivi Avventure.</h1>
+            <p>Benvenuto in RIDDLE BOX, dove ogni gioco è un enigma da risolvere e ogni scatola contiene un'avventura indimenticabile. Scopri la nostra collezione di giochi investigativi che metteranno alla prova le tue capacità deduttive.</p>
+            <a href="#products" class="btn hero-btn">Scopri i Giochi</a>
+        </div>
+        <a href="#about" class="scroll-down">
+            <i class="fas fa-chevron-down"></i>
+        </a>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <div class="about-content">
+                <h2>Chi Siamo</h2>
+                <p>RIDDLE BOX è un’esperienza immersiva di giochi investigativi da tavolo, pensata per offrire intrattenimento di alta qualità. Fondata nel 2025 da un gruppo di appassionati di enigmi e misteri, la nostra missione è quella di offrire esperienze di gioco immersive e stimolanti.</p>
+                <p>Ogni nostro gioco è frutto di una meticolosa ricerca e progettazione, con storie originali, enigmi intriganti e materiali di alta qualità. I nostri pacchetti non sono semplici giochi, ma vere e proprie avventure narrative dove i giocatori diventano detective e devono risolvere complessi casi di omicidio e misteri.</p>
+                <a href="#contact" class="btn">Contattaci</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Parallax Banner 1 -->
+    <div class="parallax-banner parallax-banner-1">
+        <div class="parallax-content">
+            <h2>Ogni Scatola, Un Nuovo Mistero</h2>
+            <p>Sfida te stesso e i tuoi amici con i nostri enigmi unici e avvincenti</p>
+        </div>
+    </div>
+
+    <!-- Products Section -->
+    <section id="products" class="products">
+        <div class="container">
+            <h2 class="section-title">I Nostri Giochi</h2>
+            <div class="product-grid">
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="https://i.postimg.cc/6qTDJ517/copertina11.png" alt="Il Caso del Maniero Maledetto">
+                    </div>
+                    <div class="product-info">
+                        <h3>Milano Underground: Codice Metro</h3>
+                        <p>Un treno deraglia. Il caos copre una verità nascosta. Solo scavando nei dati scoprirai cosa è accaduto realmente.</p>
+                        <div class="product-price">€14,99</div>
+                        <a href="#" class="btn">Acquista Ora</a>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="https://i.postimg.cc/zBD6ZZzR/10016630-27277.jpg" alt="Delitto sul Treno Notturno">
+                    </div>
+                    <div class="product-info">
+                        <h3>Coming Soon</h3>
+                        <p>Disponibile prossimamente, seguici sui social per essere aggiornato sul lancio.</p>
+                        <div class="product-price">€14,99</div>
+                        <a href="#" class="btn">Acquista Ora</a>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="https://i.postimg.cc/zBD6ZZzR/10016630-27277.jpg" alt="Il Segreto della Cripta">
+                    </div>
+                    <div class="product-info">
+                        <h3>Coming soon</h3>
+                        <p>Disponibile prossimamente, seguici sui social per essere aggiornato sul lancio.</p>
+                        <div class="product-price">€14,99</div>
+                        <a href="#" class="btn">Acquista Ora</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How to Play Section -->
+    <section id="how-to-play" class="how-to-play">
+        <div class="container">
+            <h2 class="section-title">Come Giocare</h2>
+            <div class="steps">
+                <div class="step-item">
+                    <div class="step-number">1</div>
+                    <div class="step-icon">
+                        <i class="fas fa-box-open"></i>
+                    </div>
+                    <h3>Aprire il Dossier</h3>
+                    <p>Apri la confezione e scopri i documenti, gli indizi e i materiali necessari per risolvere il caso.</p>
+                </div>
+                <div class="step-item">
+                    <div class="step-number">2</div>
+                    <div class="step-icon">
+                        <i class="fas fa-book-reader"></i>
+                    </div>
+                    <h3>Leggere le Istruzioni</h3>
+                    <p>Leggi attentamente il libretto introduttivo che ti fornirà il contesto e le regole del gioco.</p>
+                </div>
+                <div class="step-item">
+                    <div class="step-number">3</div>
+                    <div class="step-icon">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <h3>Esaminare gli Indizi</h3>
+                    <p>Analizza tutti gli indizi disponibili, discuti con gli altri giocatori e formula le tue ipotesi.</p>
+                </div>
+                <div class="step-item">
+                    <div class="step-number">4</div>
+                    <div class="step-icon">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    <h3>Risolvere il Mistero</h3>
+                    <p>Una volta raccolte tutte le informazioni, proponi la tua soluzione e scopri se hai risolto correttamente il caso.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+<!-- Parallax Banner 2 -->
+<div class="parallax-banner parallax-banner-2">
+    <div class="parallax-content">
+        <h2>L'Investigazione è un'Arte</h2>
+        <p>Metti alla prova le tue capacità deduttive e diventa il detective perfetto</p>
+    </div>
+</div>
+
+<!-- Testimonials Section -->
+<section id="testimonials" class="testimonials" style="display: none;">
+    <div class="container">
+        <h2 class="section-title">Cosa Dicono i Nostri Clienti</h2>
+        
+        <div class="testimonial-carousel">
+            <div class="testimonial-track" id="testimonial-track">
+                <!-- I testimonial verranno aggiunti via JavaScript -->
+            </div>
+            
+            <div class="carousel-controls">
+                <button class="prev-btn" id="prev-btn"><i class="fas fa-chevron-left"></i></button>
+                <button class="next-btn" id="next-btn"><i class="fas fa-chevron-right"></i></button>
+            </div>
+            
+            <div class="carousel-indicators" id="carousel-indicators">
+                <!-- Gli indicatori verranno aggiunti via JavaScript -->
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Section -->
+<section id="contact" class="contact" style="display: none;">
+    <div class="container">
+        <h2 class="section-title">Contattaci</h2>
+        <div class="contact-grid">
+            <div class="contact-info">
+                <h3>Informazioni di Contatto</h3>
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <div>
+                        <p>Via dei Misteri, 42</p>
+                        <p>20123 Milano, Italia</p>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-phone"></i>
+                    </div>
+                    <div>
+                        <p>+39 02 1234567</p>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div>
+                        <p>info@riddlebox.it</p>
+                    </div>
+                </div>
+            </div>
+            <div class="contact-form">
+                <h3>Inviaci un Messaggio</h3>
+                <form>
+                    <input type="text" placeholder="Il tuo nome" required>
+                    <input type="email" placeholder="La tua email" required>
+                    <input type="text" placeholder="Oggetto">
+                    <textarea placeholder="Il tuo messaggio" required></textarea>
+                    <button type="submit" class="btn">Invia Messaggio</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-column">
+                <div class="logo">RIDDLE <span>BOX</span></div>
+                <p>Giochi da tavolo investigativi di alta qualità per appassionati di misteri e enigmi.</p>
+                <div class="social-links">
+                    <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h3>Link Veloci</h3>
+                <ul class="footer-links">
+                    <li><a href="#hero">Home</a></li>
+                    <li><a href="#about">Chi Siamo</a></li>
+                    <li><a href="#products">Prodotti</a></li>
+                    <li><a href="#how-to-play">Come Giocare</a></li>
+                    <li><a href="#testimonials">Recensioni</a></li>
+                    <li><a href="#contact">Contatti</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Prodotti</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Milano Underground: Codice Metro</a></li>
+                    <li><a href="#">Delitto sul Treno Notturno</a></li>
+                    <li><a href="#">Il Segreto della Cripta</a></li>
+                    <li><a href="#">Il Mistero dell'Isola Perduta</a></li>
+                    <li><a href="#">Omicidio a Teatro</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 RIDDLE BOX. Tutti i diritti riservati. Progettato con passione in Italia.</p>
+        </div>
+    </div>
+</footer>
+
+<script>
+    // Mobile Menu Toggle
+    const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+    const menu = document.getElementById('menu');
+    
+    mobileMenuToggle.addEventListener('click', () => {
+        menu.classList.toggle('active');
+        mobileMenuToggle.querySelector('i').classList.toggle('fa-bars');
+        mobileMenuToggle.querySelector('i').classList.toggle('fa-times');
+    });
+    
+    // Header Scroll Effect
+    const header = document.getElementById('header');
+    
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 100) {
+            header.classList.add('scrolled');
+        } else {
+            header.classList.remove('scrolled');
+        }
+    });
+    
+    // Smooth Scrolling for Anchor Links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            document.querySelector(this.getAttribute('href')).scrollIntoView({
+                behavior: 'smooth'
+            });
+            
+            // Close mobile menu if open
+            if (menu.classList.contains('active')) {
+                menu.classList.remove('active');
+                mobileMenuToggle.querySelector('i').classList.toggle('fa-bars');
+                mobileMenuToggle.querySelector('i').classList.toggle('fa-times');
+            }
+        });
+    });
+    
+    // Parallax Effect
+    window.addEventListener('scroll', () => {
+        const parallaxElements = document.querySelectorAll('.parallax');
+        
+        parallaxElements.forEach(element => {
+            const scrollPosition = window.pageYOffset;
+            const elementPosition = element.offsetTop;
+            const distance = scrollPosition - elementPosition;
+            const windowHeight = window.innerHeight;
+            
+            if (Math.abs(distance) < windowHeight) {
+                const parallaxSpeed = 0.5;
+                element.style.backgroundPositionY = `${distance * parallaxSpeed}px`;
+            }
+        });
+    });
+    
+    // Testimonial Carousel
+    const testimonials = [
+        {
+            text: "Il Caso del Maniero Maledetto è stato incredibile! Abbiamo giocato con un gruppo di amici e siamo rimasti tutti affascinati dalla complessità della trama e dalla qualità dei materiali. È stata una serata indimenticabile!",
+            author: "Marco Bianchi",
+            role: "Appassionato di giochi investigativi",
+            image: "https://randomuser.me/api/portraits/men/32.jpg"
+        },
+        {
+            text: "Delitto sul Treno Notturno ha superato ogni aspettativa. Gli indizi sono così ben congegnati e la storia è immersiva. È come essere in un film di Agatha Christie!",
+            author: "Laura Rossi",
+            role: "Blogger di giochi da tavolo",
+            image: "https://randomuser.me/api/portraits/women/44.jpg"
+        },
+        {
+            text: "Riddle Box ha rivoluzionato le nostre serate di gioco. Il Segreto della Cripta è stato particolarmente avvincente e ha messo alla prova le nostre capacità di deduzione. Non vediamo l'ora di provare il prossimo caso!",
+            author: "Alessandro Verdi",
+            role: "Giocatore esperto",
+            image: "https://randomuser.me/api/portraits/men/67.jpg"
+        },
+        {
+            text: "Ho acquistato questi giochi per le serate in famiglia e sono stati un successo! Anche mio padre, che normalmente non ama i giochi da tavolo, è rimasto coinvolto per ore. Complimenti per i vostri prodotti!",
+            author: "Giulia Marino",
+            role: "Cliente soddisfatta",
+            image: "https://randomuser.me/api/portraits/women/29.jpg"
+        }
+    ];
+    
+    // Inizializza il carosello
+    let currentIndex = 0;
+    const trackElement = document.getElementById('testimonial-track');
+    const indicatorsElement = document.getElementById('carousel-indicators');
+    const prevBtn = document.getElementById('prev-btn');
+    const nextBtn = document.getElementById('next-btn');
+    
+    // Crea gli elementi del carosello
+    testimonials.forEach((testimonial, index) => {
+        // Crea l'elemento testimonial
+        const testimonialElement = document.createElement('div');
+        testimonialElement.className = 'testimonial-item';
+        testimonialElement.innerHTML = `
+            <div class="testimonial-image">
+                <img src="${testimonial.image}" alt="${testimonial.author}">
+            </div>
+            <div class="testimonial-text">${testimonial.text}</div>
+            <div class="testimonial-author">${testimonial.author}</div>
+            <div class="testimonial-role">${testimonial.role}</div>
+        `;
+        trackElement.appendChild(testimonialElement);
+        
+        // Crea l'indicatore
+        const indicator = document.createElement('div');
+        indicator.className = `indicator ${index === 0 ? 'active' : ''}`;
+        indicator.addEventListener('click', () => {
+            goToSlide(index);
+        });
+        indicatorsElement.appendChild(indicator);
+    });
+    
+    // Funzione per andare a una slide specifica
+    function goToSlide(index) {
+        currentIndex = index;
+        updateCarousel();
+    }
+    
+    // Aggiorna la posizione del carosello
+    function updateCarousel() {
+        trackElement.style.transform = `translateX(-${currentIndex * 100}%)`;
+        
+        // Aggiorna gli indicatori
+        document.querySelectorAll('.indicator').forEach((indicator, index) => {
+            if (index === currentIndex) {
+                indicator.classList.add('active');
+            } else {
+                indicator.classList.remove('active');
+            }
+        });
+    }
+    
+    // Event listeners per i pulsanti
+    prevBtn.addEventListener('click', () => {
+        currentIndex = (currentIndex - 1 + testimonials.length) % testimonials.length;
+        updateCarousel();
+    });
+    
+    nextBtn.addEventListener('click', () => {
+        currentIndex = (currentIndex + 1) % testimonials.length;
+        updateCarousel();
+    });
+    
+    // Auto-scorrimento ogni 5 secondi
+    setInterval(() => {
+        currentIndex = (currentIndex + 1) % testimonials.length;
+        updateCarousel();
+    }, 5000);
+</script>
+</body>
+</html>
