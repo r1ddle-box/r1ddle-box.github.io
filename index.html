@@ -11,10 +11,10 @@
             // Parse the query string from the URL
             const params = new URLSearchParams(window.location.search);
             // Get the value of the 'p' parameter
-            const page = params.get('p');
+            let page = params.get('p');
 
             // If 'p' is provided, fetch and load the corresponding HTML file
-            if(!page) page='home';
+            if(!page) {page='home';}
                 fetch(page + '.html')
                     .then(response => {
                         // Check if the fetch was successful
