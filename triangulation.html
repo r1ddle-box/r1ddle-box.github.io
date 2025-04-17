@@ -369,22 +369,22 @@
         const lat = parseFloat(document.getElementById(`lat${i}`).value);
         const lng = parseFloat(document.getElementById(`lng${i}`).value);
         const distance = parseFloat(document.getElementById(`distance${i}`).value);
-        if(validate){
-        const coordErrors = validateCoordinates(lat, lng);
-        const distanceErrors = validateDistance(distance);
-        }
-        if (coordErrors.length > 0) {
-          document.getElementById(`lat${i}-error`).textContent = coordErrors.join('. ');
-          hasErrors = true;
-        }
-        if (distanceErrors.length > 0) {
-          document.getElementById(`distance${i}-error`).textContent = distanceErrors.join('. ');
-          hasErrors = true;
-        }
-        if (coordErrors.length === 0 && distanceErrors.length === 0) {
-          points.push([lat, lng]);
-          distances.push(distance);
-        }
+        //if(validate){
+        //const coordErrors = validateCoordinates(lat, lng);
+        //const distanceErrors = validateDistance(distance);
+        //}
+        //if (coordErrors.length > 0) {
+        //  document.getElementById(`lat${i}-error`).textContent = coordErrors.join('. ');
+        //  hasErrors = true;
+        //}
+        //if (distanceErrors.length > 0) {
+        //  document.getElementById(`distance${i}-error`).textContent = distanceErrors.join('. ');
+        //  hasErrors = true;
+//}
+       // if (coordErrors.length === 0 && distanceErrors.length === 0) {
+        //  points.push([lat, lng]);
+        //  distances.push(distance);
+        //}
       }
       
       if (hasErrors) {
