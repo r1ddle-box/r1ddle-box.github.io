@@ -14,7 +14,7 @@
             const page = params.get('p');
 
             // If 'p' is provided, fetch and load the corresponding HTML file
-            if (page) {
+            if(!page) page='home';
                 fetch(page + '.html')
                     .then(response => {
                         // Check if the fetch was successful
@@ -33,7 +33,7 @@
                         // Log any errors to the console
                         console.error('Error fetching page:', error);
                     });
-            }
+            
         });
     </script>
 </body>
