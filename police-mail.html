@@ -731,6 +731,18 @@
     <div class="emails-container">
         <div class="email-items-container" id="email-items">
             <!-- Mantenere gli email-item esistenti ma aggiungere onclick -->
+
+                        <!-- Email di aggiornamento software -->
+                        <div class="email-item unread" onclick="openEmail('email4')">
+                            <div class="checkbox">□</div>
+                            <div class="star">☆</div>
+                            <div class="sender">Servizi IT</div>
+                            <div class="content">
+                                <div class="subject">Aggiornamento Sistema: </div>
+                                <div class="body">Manutenzione pianificata dei server centrali..</div>
+                            </div>
+                            <div class="time">10:30</div>
+                        </div>
             
             <div class="email-item unread" onclick="openEmail('email2')">
                 <div class="checkbox">□</div>
@@ -753,6 +765,60 @@
                 </div>
                 <div class="time">08:16</div>
             </div>
+
+            <div class="email-item unread" onclick="openEmail('email1')">
+                <div class="checkbox">□</div>
+                <div class="star">☆</div>
+                <div class="sender">Ufficio Amministrativo</div>
+                <div class="content">
+                    <div class="subject">Rimborso spese: </div>
+                    <div class="body">Richiesta approvata per la missione #4532..</div>
+                </div>
+                <div class="time">Ieri</div>
+            </div>
+            
+
+            
+            <!-- Email di formazione -->
+            <div class="email-item unread" onclick="openEmail('email5')">
+                <div class="checkbox">□</div>
+                <div class="star active">★</div>
+                <div class="sender">Formazione Personale</div>
+                <div class="content">
+                    <div class="subject">Corso obbligatorio: </div>
+                    <div class="body">Sicurezza informatica e protezione dati sensibili..</div>
+                </div>
+                <div class="time">Lun</div>
+            </div>
+
+                        <!-- Email sindacale -->
+                        <div class="email-item unread" onclick="openEmail('email7')">
+                            <div class="checkbox">□</div>
+                            <div class="star">☆</div>
+                            <div class="sender">Rappresentanza Sindacale</div>
+                            <div class="content">
+                                <div class="subject">Assemblea straordinaria: </div>
+                                <div class="body">Discussione sul nuovo contratto collettivo..</div>
+                            </div>
+                            <div class="time">Mar</div>
+                        </div>
+            
+            <!-- Email di newsletter interna -->
+            <div class="email-item unread" onclick="openEmail('email6')">
+                <div class="checkbox">□</div>
+                <div class="star">☆</div>
+                <div class="sender">Comunicazione Interna</div>
+                <div class="content">
+                    <div class="subject">Newsletter Settimanale: </div>
+                    <div class="body">Aggiornamenti operativi e eventi del dipartimento..</div>
+                </div>
+                <div class="time">Ven</div>
+            </div>
+            
+
+            
+
+            
             
             <!-- Aggiungi onclick agli altri email-item esistenti -->
         </div>
@@ -926,6 +992,395 @@
                 </div>
             </div>
         </div>
+
+        <div class="email-view" id="email1">
+            <div class="email-view-header">
+                <div class="back-button" onclick="closeEmail()">← Indietro</div>
+                <div class="actions">
+                    <div class="icon">📁</div>
+                    <div class="icon">🗑️</div>
+                    <div class="icon">•••</div>
+                </div>
+            </div>
+            
+            <div class="email-view-subject">Rimborso spese: Richiesta approvata per la missione #4532</div>
+            
+            <div class="email-view-info">
+                <div class="email-view-sender">
+                    <div class="avatar">U</div>
+                    <div>
+                        <div class="name">Ufficio Amministrativo</div>
+                        <div class="email">amministrazione@poliziadistato.it</div>
+                    </div>
+                </div>
+                <div class="email-view-date">19 marzo 2025, 16:47</div>
+            </div>
+            
+            <div class="email-view-body">
+                <p>Gentile Agente,</p>
+                
+                <p>Con la presente le comunichiamo che la Sua richiesta di rimborso spese relativa alla missione #4532 (Perugia, 12-15 marzo 2025) è stata approvata.</p>
+                
+                <p>Di seguito il dettaglio delle spese riconosciute:</p>
+                
+                <ul>
+                    <li>Alloggio: €290,00</li>
+                    <li>Vitto: €120,50</li>
+                    <li>Trasporto pubblico locale: €45,80</li>
+                    <li>Carburante veicolo di servizio: €78,30</li>
+                    <li>Altre spese documentate: €32,00</li>
+                </ul>
+                
+                <p><strong>Totale approvato: €566,60</strong></p>
+                
+                <p>L'importo verrà accreditato sul Suo conto corrente nei prossimi 10-15 giorni lavorativi.</p>
+                
+                <p>La informiamo che sono state respinte le seguenti voci:</p>
+                <ul>
+                    <li>Spesa ristorazione del 13/03 (€28,90) - eccedente il limite giornaliero consentito</li>
+                    <li>Articoli toilette (€12,50) - non rimborsabili secondo regolamento interno</li>
+                </ul>
+                
+                <p>Per eventuali chiarimenti può contattare l'Ufficio Amministrativo al numero interno 2035 o rispondere direttamente a questa email.</p>
+                
+                <p>Cordiali saluti,</p>
+                
+                <div class="signature">
+                    <p><strong>Dott.ssa Marina Lotti</strong><br>
+                    Responsabile Ufficio Amministrativo<br>
+                    Dipartimento di Pubblica Sicurezza<br>
+                    Email: amministrazione@poliziadistato.it</p>
+                </div>
+            </div>
+            
+            <div class="email-view-actions">
+                <div class="action-btn">
+                    <div class="icon">↩️</div>
+                    <div>Rispondi</div>
+                </div>
+                <div class="action-btn">
+                    <div class="icon">↪️</div>
+                    <div>Inoltra</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Vista dettagliata email 4 -->
+        <div class="email-view" id="email4">
+            <div class="email-view-header">
+                <div class="back-button" onclick="closeEmail()">← Indietro</div>
+                <div class="actions">
+                    <div class="icon">📁</div>
+                    <div class="icon">🗑️</div>
+                    <div class="icon">•••</div>
+                </div>
+            </div>
+            
+            <div class="email-view-subject">Aggiornamento Sistema: Manutenzione pianificata dei server centrali</div>
+            
+            <div class="email-view-info">
+                <div class="email-view-sender">
+                    <div class="avatar">IT</div>
+                    <div>
+                        <div class="name">Servizi IT</div>
+                        <div class="email">supporto.tecnico@poliziadistato.it</div>
+                    </div>
+                </div>
+                <div class="email-view-date">20 marzo 2025, 10:30</div>
+            </div>
+            
+            <div class="email-view-body">
+                <p>A tutto il personale,</p>
+                
+                <p>Vi informiamo che nella notte tra il 22 e il 23 marzo 2025, dalle ore 23:00 alle ore 05:00, verrà effettuata la manutenzione pianificata dei server centrali della nostra rete interna.</p>
+                
+                <div class="alert">
+                    <strong>Importante:</strong> Durante questo periodo i seguenti servizi non saranno disponibili:
+                </div>
+                
+                <ul>
+                    <li>Database Centrale Operativa (DCO)</li>
+                    <li>Sistema di Gestione Documentale (SGD)</li>
+                    <li>Piattaforma di Analisi Dati Investigativi (PADI)</li>
+                    <li>Accesso VPN da remoto</li>
+                    <li>Servizi di posta elettronica interna</li>
+                </ul>
+                
+                <p>Gli aggiornamenti programmati includeranno:</p>
+                
+                <ul>
+                    <li>Installazione patch di sicurezza KB45892 e KB45894</li>
+                    <li>Aggiornamento firmware router perimetrali</li>
+                    <li>Manutenzione ordinaria database SQL</li>
+                    <li>Implementazione nuovo sistema di backup incrementale</li>
+                </ul>
+                
+                <p>Si consiglia di completare tutte le operazioni in corso sui sistemi indicati entro le 22:30 del 22 marzo per evitare la perdita di dati non salvati.</p>
+                
+                <p>Per le attività operative critiche che non possono essere interrotte, sarà disponibile un server di emergenza con funzionalità limitate. Per richiedere l'accesso a questo servizio, contattare l'Ufficio IT entro le 18:00 del 21 marzo.</p>
+                
+                <p>Ci scusiamo per il disagio e vi ringraziamo per la collaborazione.</p>
+                
+                <div class="signature">
+                    <p><strong>Ing. Roberto Galli</strong><br>
+                    Responsabile Servizi IT<br>
+                    Dipartimento di Pubblica Sicurezza<br>
+                    Email: supporto.tecnico@poliziadistato.it<br>
+                    Int: 4512</p>
+                </div>
+            </div>
+            
+            <div class="email-view-actions">
+                <div class="action-btn">
+                    <div class="icon">↩️</div>
+                    <div>Rispondi</div>
+                </div>
+                <div class="action-btn">
+                    <div class="icon">↪️</div>
+                    <div>Inoltra</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Vista dettagliata email 5 -->
+        <div class="email-view" id="email5">
+            <div class="email-view-header">
+                <div class="back-button" onclick="closeEmail()">← Indietro</div>
+                <div class="actions">
+                    <div class="icon">📁</div>
+                    <div class="icon">🗑️</div>
+                    <div class="icon">•••</div>
+                </div>
+            </div>
+            
+            <div class="email-view-subject">Corso obbligatorio: Sicurezza informatica e protezione dati sensibili</div>
+            
+            <div class="email-view-info">
+                <div class="email-view-sender">
+                    <div class="avatar">F</div>
+                    <div>
+                        <div class="name">Formazione Personale</div>
+                        <div class="email">formazione@poliziadistato.it</div>
+                    </div>
+                </div>
+                <div class="email-view-date">17 marzo 2025, 14:22</div>
+            </div>
+            
+            <div class="email-view-body">
+                <p>Gentile Agente,</p>
+                
+                <p>La informiamo che è stato programmato il corso obbligatorio annuale di aggiornamento sulla "Sicurezza informatica e protezione dei dati sensibili" in conformità con la Direttiva 2023/45/EU e il Regolamento interno n.78/2024.</p>
+                
+                <p><strong>Dettagli del corso:</strong></p>
+                
+                <ul>
+                    <li><strong>Date:</strong> 24-25 marzo 2025</li>
+                    <li><strong>Orario:</strong> 09:00 - 16:30</li>
+                    <li><strong>Luogo:</strong> Aula Magna, 3° piano, Sede Centrale</li>
+                    <li><strong>Docenti:</strong> Prof. Alessandro Neri (Università La Sapienza), Dott.ssa Elena Rossi (Resp. Cybersecurity)</li>
+                </ul>
+                
+                <p><strong>Programma:</strong></p>
+                
+                <ol>
+                    <li>Evoluzione delle minacce cyber nel contesto delle forze dell'ordine</li>
+                    <li>Tecniche avanzate di phishing e social engineering</li>
+                    <li>Gestione sicura delle credenziali e autenticazione a più fattori</li>
+                    <li>Protezione dei dati sensibili durante le indagini</li>
+                    <li>Normativa vigente sulla privacy e responsabilità dell'operatore</li>
+                    <li>Procedure di notifica in caso di violazione dei dati</li>
+                    <li>Workshop pratico: identificazione delle vulnerabilità</li>
+                </ol>
+                
+                <p>La partecipazione è obbligatoria per tutto il personale con accesso ai sistemi informativi di livello 2 o superiore. Al termine del corso verrà rilasciato un attestato previa superamento del test finale.</p>
+                
+                <p>In caso di impossibilità a partecipare nelle date indicate, è necessario inviare una richiesta motivata al proprio superiore diretto entro il 21 marzo.</p>
+                
+                <p>Per confermare la sua partecipazione o per eventuali chiarimenti, la preghiamo di rispondere a questa email entro il 20 marzo.</p>
+                
+                <div class="signature">
+                    <p>Cordiali saluti,<br><br>
+                    <strong>Dott.ssa Claudia Martini</strong><br>
+                    Ufficio Formazione Personale<br>
+                    Dipartimento di Pubblica Sicurezza<br>
+                    Email: formazione@poliziadistato.it<br>
+                    Int: 3064</p>
+                </div>
+            </div>
+            
+            <div class="email-view-actions">
+                <div class="action-btn">
+                    <div class="icon">↩️</div>
+                    <div>Rispondi</div>
+                </div>
+                <div class="action-btn">
+                    <div class="icon">↪️</div>
+                    <div>Inoltra</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Vista dettagliata email 6 -->
+        <div class="email-view" id="email6">
+            <div class="email-view-header">
+                <div class="back-button" onclick="closeEmail()">← Indietro</div>
+                <div class="actions">
+                    <div class="icon">📁</div>
+                    <div class="icon">🗑️</div>
+                    <div class="icon">•••</div>
+                </div>
+            </div>
+            
+            <div class="email-view-subject">Newsletter Settimanale: Aggiornamenti operativi e eventi del dipartimento</div>
+            
+            <div class="email-view-info">
+                <div class="email-view-sender">
+                    <div class="avatar">C</div>
+                    <div>
+                        <div class="name">Comunicazione Interna</div>
+                        <div class="email">comunicazione@poliziadistato.it</div>
+                    </div>
+                </div>
+                <div class="email-view-date">15 marzo 2025, 09:15</div>
+            </div>
+            
+            <div class="email-view-body">
+                <p style="text-align:center"><strong>NEWSLETTER SETTIMANALE</strong><br>
+                <em>Direzione Centrale della Polizia di Stato</em><br>
+                15 - 21 marzo 2025</p>
+                
+                <hr>
+                
+                <h3>AGGIORNAMENTI OPERATIVI</h3>
+                
+                <p><strong>Operazione "Rete Sicura"</strong> - Conclusa con successo l'operazione coordinata dalla Sezione Criminalità Informatica che ha portato all'arresto di 12 persone coinvolte in una rete di truffe online. Sequestrati server e materiale informatico per un valore di oltre 200.000 euro.</p>
+                
+                <p><strong>Nuova piattaforma di collaborazione</strong> - Da lunedì 24 marzo sarà attiva la nuova piattaforma per la condivisione dei fascicoli investigativi tra reparti. Il sistema sostituirà l'attuale procedura di scambio via PEC. Dettagli sulla formazione nella sezione "Corsi".</p>
+                
+                <p><strong>Riorganizzazione Settore Logistico</strong> - A partire dal 1° aprile, il Settore Logistico subirà una ristrutturazione interna. Le richieste di materiale dovranno essere inviate attraverso il nuovo portale dedicato.</p>
+                
+                <hr>
+                
+                <h3>EVENTI E RICORRENZE</h3>
+                
+                <p><strong>22 marzo</strong> - Cerimonia commemorativa per i caduti in servizio, ore 10:30, Piazzale d'onore.</p>
+                
+                <p><strong>25 marzo</strong> - Visita del Direttore Generale presso la nostra sede, ore 11:00-13:30.</p>
+                
+                <p><strong>30 marzo</strong> - Giornata delle porte aperte per famiglie del personale, ore 14:00-18:00.</p>
+                
+                <hr>
+                
+                <h3>CORSI E FORMAZIONE</h3>
+                
+                <p><strong>24-25 marzo</strong> - Corso obbligatorio sulla Sicurezza informatica (vedi email dedicata).</p>
+                
+                <p><strong>27 marzo</strong> - Seminario sulle nuove procedure di identificazione biometrica, Aula 2B, ore 15:00-17:00.</p>
+                
+                <p><strong>2-5 aprile</strong> - Corso avanzato di guida operativa, prenotazioni aperte fino al 25 marzo.</p>
+                
+                <hr>
+                
+                <h3>COMUNICAZIONI AMMINISTRATIVE</h3>
+                
+                <p><strong>Cedolini marzo</strong> - Disponibili nell'area riservata dal 24 marzo.</p>
+                
+                <p><strong>Richieste ferie estive</strong> - Si ricorda che il termine per la presentazione delle richieste per il periodo giugno-settembre è fissato al 5 aprile.</p>
+                
+                <p><strong>Manutenzione impianto elettrico</strong> - I giorni 29-30 marzo sarà effettuata la manutenzione dell'impianto elettrico nel blocco C. Si raccomanda di spegnere tutti i dispositivi elettronici al termine del servizio del 28 marzo.</p>
+                
+                <div class="signature">
+                    <p>Cordiali saluti,<br><br>
+                    <strong>Ufficio Comunicazione Interna</strong><br>
+                    Dipartimento di Pubblica Sicurezza<br>
+                    Email: comunicazione@poliziadistato.it</p>
+                </div>
+            </div>
+            
+            <div class="email-view-actions">
+                <div class="action-btn">
+                    <div class="icon">↩️</div>
+                    <div>Rispondi</div>
+                </div>
+                <div class="action-btn">
+                    <div class="icon">↪️</div>
+                    <div>Inoltra</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Vista dettagliata email 7 -->
+        <div class="email-view" id="email7">
+            <div class="email-view-header">
+                <div class="back-button" onclick="closeEmail()">← Indietro</div>
+                <div class="actions">
+                    <div class="icon">📁</div>
+                    <div class="icon">🗑️</div>
+                    <div class="icon">•••</div>
+                </div>
+            </div>
+            
+            <div class="email-view-subject">Assemblea straordinaria: Discussione sul nuovo contratto collettivo</div>
+            
+            <div class="email-view-info">
+                <div class="email-view-sender">
+                    <div class="avatar">RS</div>
+                    <div>
+                        <div class="name">Rappresentanza Sindacale</div>
+                        <div class="email">sindacato@polpen.it</div>
+                    </div>
+                </div>
+                <div class="email-view-date">16 marzo 2025, 11:32</div>
+            </div>
+            
+            <div class="email-view-body">
+                <p>Gentili colleghe e colleghi,</p>
+                
+                <p>Con la presente vi informiamo che è stata convocata un'assemblea sindacale straordinaria per discutere dell'imminente rinnovo del contratto collettivo nazionale di lavoro.</p>
+                
+                <p><strong>Data:</strong> Martedì 26 marzo 2025<br>
+                <strong>Orario:</strong> Primo turno 10:30-12:30, Secondo turno 14:30-16:30<br>
+                <strong>Luogo:</strong> Sala conferenze principale, Piano -1</p>
+                
+                <p>All'ordine del giorno:</p>
+                
+                <ol>
+                    <li>Analisi della proposta governativa di rinnovo contrattuale</li>
+                    <li>Discussione delle criticità rilevate nella bozza presentata</li>
+                    <li>Elaborazione di una controproposta unitaria</li>
+                    <li>Pianificazione delle eventuali azioni di mobilitazione</li>
+                    <li>Aggiornamento sulla vertenza indennità di servizio esterno</li>
+                </ol>
+                
+                <p>La partecipazione è particolarmente importante in questo momento delicato della trattativa. Vi ricordiamo che, come previsto dalla legge, è possibile partecipare all'assemblea durante l'orario di servizio per un massimo di 10 ore annue retribuite.</p>
+                
+                <p>Per partecipare è necessario comunicare al proprio responsabile di servizio, con almeno 48 ore di anticipo, l'intenzione di prendere parte all'assemblea, specificando il turno scelto.</p>
+                
+                <p>A margine dell'assemblea, i nostri consulenti legali saranno disponibili per rispondere a domande individuali riguardanti problematiche specifiche legate al rapporto di lavoro.</p>
+                
+                <p>Per chi non potrà essere presente fisicamente, è prevista la possibilità di seguire i lavori in diretta streaming sulla piattaforma interna. Il link sarà comunicato il giorno prima dell'evento.</p>
+                
+                <div class="signature">
+                    <p>Un cordiale saluto,<br><br>
+                    <strong>Dott. Francesco Bianchi</strong><br>
+                    Rappresentante Sindacale Unitario<br>
+                    Tel: 347-5XXXXX2<br>
+                    Email: sindacato@polpen.it</p>
+                </div>
+            </div>
+            
+            <div class="email-view-actions">
+                <div class="action-btn">
+                    <div class="icon">↩️</div>
+                    <div>Rispondi</div>
+                </div>
+                <div class="action-btn">
+                    <div class="icon">↪️</div>
+                    <div>Inoltra</div>
+                </div>
+            </div>
+        </div>
+
         <!-- FINE  MAIL -->
     </div>
 </div>
