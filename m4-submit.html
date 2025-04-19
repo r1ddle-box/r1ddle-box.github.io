@@ -165,7 +165,7 @@
                 const inputText = textInput.value.trim();
                 
                 // Split by commas and whitespace
-                const words = inputText.split(/[\s,]+/).filter(word => word.length > 0);
+                const words = inputText.split(/[\s,]+/).filter(word => word.length > 0).map(word => word.toLowerCase());
                 
                 // Check if the words contain exactly the four target words (order doesn't matter)
                 const foundWords = [];
