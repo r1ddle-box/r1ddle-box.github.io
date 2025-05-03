@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Word Checker</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
             --primary: #3498db;
@@ -11,6 +13,7 @@
             --error: #e74c3c;
             --dark: #34495e;
             --light: #ecf0f1;
+            --hint: #f1c40f;
         }
         
         * {
@@ -85,6 +88,11 @@
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
         }
         
         .btn:hover {
@@ -94,6 +102,14 @@
         
         .btn:active {
             transform: translateY(0);
+        }
+        
+        .btn-hint {
+            background-color: var(--hint);
+        }
+        
+        .btn-hint:hover {
+            background-color: #d4ac0d;
         }
         
         .message {
@@ -140,8 +156,9 @@
                     required
                 >
             </div>
-            <button type="submit" class="btn">Invia</button>
+            <button type="submit" class="btn"><i class="fas fa-paper-plane"></i> Invia</button>
         </form>
+        <button id="hintButton" class="btn btn-hint"><i class="fas fa-lightbulb"></i> Suggerimenti</button>
         <div id="message" class="message"></div>
     </div>
 
@@ -150,10 +167,12 @@
             const targetWords = ['davide', 'neri', 'riccardo', 'fontana'];
             
             const redirectUrl = 'https://r1ddle-box.github.io/?p=m4-final-win';
+            const hintUrl = 'https://r1ddle-box.github.io/?p=m4-suggestions';
             
             const form = document.getElementById('wordForm');
             const textInput = document.getElementById('textInput');
             const messageBox = document.getElementById('message');
+            const hintButton = document.getElementById('hintButton');
             
             form.addEventListener('submit', function(e) {
                 e.preventDefault();
@@ -203,6 +222,11 @@
             textInput.addEventListener('input', function() {
                 messageBox.className = 'message';
                 messageBox.textContent = '';
+            });
+            
+            // Hint button functionality
+            hintButton.addEventListener('click', function() {
+                window.open(hintUrl, '_blank');
             });
         });
     </script>
