@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suggerimenti</title>
+    <style>
+        :root {
+            --primary: #3498db;
+            --secondary: #8e44ad;
+            --success: #2ecc71;
+            --error: #e74c3c;
+            --dark: #34495e;
+            --light: #ecf0f1;
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #8e44ad, #3498db);
+            padding: 20px;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 700px;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            padding: 30px;
+            transition: var(--transition);
+        }
+        
+        h1.title {
+            color: var(--light);
+            text-align: center;
+            margin-bottom: 20px;
+            font-weight: 600;
+            font-size: 40px;
+            text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
+        }
+        
+        h2 {
+            color: var(--dark);
+            text-align: center;
+            margin-bottom: 30px;
+            font-weight: 600;
+        }
+        
+        /* Accordion Styles */
+        .accordion {
+            width: 100%;
+            margin-top: 20px;
+        }
+        
+        .accordion-item {
+            margin-bottom: 10px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .accordion-header {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            padding: 15px 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+        
+        .accordion-header:hover {
+            background: linear-gradient(to right, #2980b9, #7d3c98);
+        }
+        
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            background-color: white;
+            transition: max-height 0.4s ease;
+        }
+        
+        .accordion-content-inner {
+            padding: 20px;
+            border-top: 1px solid #eee;
+        }
+        
+        .toggle-icon {
+            width: 20px;
+            height: 20px;
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+        
+        .toggle-icon::before,
+        .toggle-icon::after {
+            content: '';
+            position: absolute;
+            background-color: white;
+            border-radius: 2px;
+        }
+        
+        .toggle-icon::before {
+            width: 100%;
+            height: 2px;
+            top: 9px;
+            left: 0;
+        }
+        
+        .toggle-icon::after {
+            width: 2px;
+            height: 100%;
+            top: 0;
+            left: 9px;
+            transition: transform 0.3s ease;
+        }
+        
+        .active .toggle-icon::after {
+            transform: rotate(90deg);
+        }
+        
+        .active .accordion-header {
+            background: linear-gradient(to right, #2980b9, #7d3c98);
+        }
+        
+        /* Animation for badge */
+        .badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            background-color: rgba(255, 255, 255, 0.3);
+            margin-left: 10px;
+            transition: var(--transition);
+        }
+        
+        .accordion-header:hover .badge {
+            background-color: rgba(255, 255, 255, 0.5);
+        }
+        
+        /* Footer */
+        .footer {
+            margin-top: 30px;
+            text-align: center;
+            color: var(--light);
+            font-size: 14px;
+            opacity: 0.8;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            
+            h1.title {
+                font-size: 32px;
+            }
+            
+            .accordion-header {
+                padding: 12px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1 class="title">Suggerimenti</h1>
+    
+    <div class="container">
+        <h2>Milano Underground: Codice Metro</h2>
+        
+        <div class="accordion">
+            <!-- Accordion Item 1 -->
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <span>Istruzioni</span>
+                    <div class="toggle-icon"></div>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-content-inner">
+                        <p>Se sei bloccato nel gioco, puoi cliccare su una delle seguenti prove per avere suggerimenti utili al proseguimento delle tue indagini. Attenzione: aprire i suggerimenti può nuocere gravemente al divertimento del gioco, usare con parsimonia!</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Accordion Item 2 -->
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <span>Articolo del blog di Elena Costa <span class="badge">Web</span></span>
+                    <div class="toggle-icon"></div>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-content-inner">
+                        <p>Sul suo personale blog, Elena Costa ha pubblicato un articolo relativamente all'infrastruttura di sicurezza dell'Azienda Trasporti Milano. C'è qualcosa di utile ai fini dell'indagine?</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Accordion Item 3 -->
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <span>Estratto conto bancario<span class="badge">Documento</span></span>
+                    <div class="toggle-icon"></div>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-content-inner">
+                        <p>Questo è l'estratto conto dell'ultimo anno di Andrea Rizzo. Contiene tutte le voci e gli importi in entrata, evidenziate di colore verde, e in uscita, evidenziate di colore rosso, raggruppate per categoria di spesa. Infine, vi è un grafico con un riepilogo delle movimentazioni per ciascun mese del periodo preso in considerazione nell'estratto conto. Hai guardato bene tutte le spese in uscita?</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Accordion Item 4 -->
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <span>Documentazione Appalto M4<span class="badge">Documento</span></span>
+                    <div class="toggle-icon"></div>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-content-inner">
+                        <p>Questo è il documento ufficiale per la gara di appalto eseguita per il rifacimento dell'infrastruttura della sicurezza per i servizi di trasporto di Milano. La gara era contesa tra due principali aziende: hai guardato bene chi ha vinto?</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Accordion Item 5 -->
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <span>Mail crittografata<span class="badge">Mail</span></span>
+                    <div class="toggle-icon"></div>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-content-inner">
+                        <p>Nel Rapporto di Analisi Forense Digitale è presente uno scambio di mail tra Elena Costa e un soggetto ancora da identificare. Parte del contenuto dei messaggi è rimasto crittografato e il dipartimento ha consegnato solamente ciò che è riuscito ad estrapolare della conversazione. Per decifrare la restante parte bisognerà sostituire ciascuna lettera con la rispettiva di tre posizioni indietro nell'alfabeto. Ad esempio: partendo dalla lettera D, bisognerà andare indietro di 3 lettere, quindi C, B e A. Pertanto D corrisponde ad A</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Accordion Item 6 -->
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <span>Lettera di licenziamento <span class="badge">Mail</span></span>
+                    <div class="toggle-icon"></div>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-content-inner">
+                        <p>I tuoi colleghi del dipartimento di polizia hanno analizzato le caselle di posta dei soggetti sospettati, coinvolti nell'indagine del deragliamento della linea M4. Tra le varie email nella posta in arrivo di Elena Costa, ne hanno trovata una inerente al suo licenziamento. Hai letto la motivazione e la data del licenziamento?</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Accordion Item 7 -->
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <span>Indagine sul gruppo di hacker<span class="badge">Rapporto polizia</span></span>
+                    <div class="toggle-icon"></div>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-content-inner">
+                        <p>Tra i soggetti sospettati per l'indagine sul deragliamento della linea M4 è chiaro esserci anche gli Shadow Cipher, gruppo hacker già tenuto sotto osservazione a causa di alcuni illeciti commessi precedentemente. Hai letto la chat ritrovata dalla Polizia Postale? Cosa hanno in mente?</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Accordion Item 8 -->
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <span>Rapporto tecnico su attacco hack M4 <span class="badge">Rapporto polizia</span></span>
+                    <div class="toggle-icon"></div>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-content-inner">
+                        <p>Il documento tecnico attesta che il deragliamento della linea M4 della metropolitana di Milano non è stato un incidente, bensì un attacco doloso. Hai letto dal rapporto cosa ha causato il deragliamento della metro?</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Accordion Item 9 -->
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <span>Testimonianza di un barista<span class="badge">Rapporto polizia</span></span>
+                    <div class="toggle-icon"></div>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-content-inner">
+                        <p>La testimonianza è stata raccolta a posteriori del deragliamento, durante una perlustrazione degli agenti in cerca di indizi per l'indagine in corso. Il barista è riuscito a ricordare poche cose, ma tra queste potrebbe essercene una utile, ti ricordi se ha dato qualche nominativo?</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Accordion Item 10 -->
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <span>Intercettazione telefonica<span class="badge">Special</span></span>
+                    <div class="toggle-icon"></div>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-content-inner">
+                        <p>Dalle varie analisi effettuate per l'indagine, siamo riusciti a trovare i tabulati di questa telefonata in cui viene menzionato il deragliamento della M4, ci siamo! I dati della triangolazione ci saranno utili per identificare la posizione dei due interlocutori.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <span>Presentazione SafeRail<span class="badge">Brochure</span></span>
+                    <div class="toggle-icon"></div>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-content-inner">
+                        <p>Questa brochure di presentazione dell'azienda SafeRail era tra i documenti del dossier, riconosci qualcuno dall'immmagine di copertina? Non sembrano visi familiari</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <span>Presentazione SecureTech<span class="badge">Brochure</span></span>
+                    <div class="toggle-icon"></div>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-content-inner">
+                        <p>Questa brochure di presentazione dell'azienda SecureTech era tra i documenti del dossier, riconosci qualcuno dalle immagini al suo interno?</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <span>Il Corriere di Milano - 16 Marzo<span class="badge">Giornale</span></span>
+                    <div class="toggle-icon"></div>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-content-inner">
+                        <p>Il corriere di Milano è tra i giornali più importanti della citàà, vengono riportate al suo interno tutte le notizie del posto. Hai visto gli ultimi articoli sulla manifestazione in piazza Duomo e sul rifacimento del Parco?</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <span>Rapporto Tecnico dismissione Dark Web<span class="badge">Rapporto polizia</span></span>
+                    <div class="toggle-icon"></div>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-content-inner">
+                        <p>La polizia è riuscita a dismettere un altro sito illegale facente parte del dark web, il lato oscuro di Internet. In allegato al rapporto è stato inserito uno screenshot del sito, per poterlo inserire in archivio. Si intravedono degli annunci di servizi illegali, ne hai visto per caso qualcuno di familiare all'indagine in corso?</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <span>Appunti del detective<span class="badge">Post-it</span></span>
+                    <div class="toggle-icon"></div>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-content-inner">
+                        <p>Una nota lasciata dal detective del caso per non scordarsi come accedere alla propria casella della polizia di stato. Aprire l'URL per trovare informazioni utili al caso.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <span>Hacking terminale<span class="badge">Web</span></span>
+                    <div class="toggle-icon"></div>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-content-inner">
+                        <p> E' necessario accedere al server del gruppo di hacker per scoprire i loro intenti e il loro coinvolgimento nel caso del deragliamento della linea M4. Per poterlo fare è necessario ricopiare in ordine tutti i passaggi riportati nella mail di Giulio Moretti. Ti servirà una password contenente numeri, lettere e caratteri speciali.. forse qualcosa sul gruppo di Hackers stesso?. Non dimenticare nell'ultimo passaggio di inserire la tua vera mail per ricevere gli aggiornamenti da Giulio Moretti una volta analizzati i dati che hai scoperto!.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <span>Database Polizia<span class="badge">Web</span></span>
+                    <div class="toggle-icon"></div>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-content-inner">
+                        <p>Se non sai come entrare qui ti consiglio di cercare tra le mail del detective. In questa piattaforma puoi cercare informazioni su sospettati inserendone nome e cognome. Hai provato a leggere bene la testimonianza del barista?</p>
+                    </div>
+                </div>
+            </div>
+
+            
+
+
+
+        </div>
+        
+        
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const accordionHeaders = document.querySelectorAll('.accordion-header');
+            
+            accordionHeaders.forEach(header => {
+                header.addEventListener('click', function() {
+                    const accordionItem = this.parentElement;
+                    const content = this.nextElementSibling;
+                    const isActive = this.classList.contains('active');
+                    
+                    // Close all active items
+                    document.querySelectorAll('.accordion-header.active').forEach(activeHeader => {
+                        if (activeHeader !== this) {
+                            activeHeader.classList.remove('active');
+                            activeHeader.nextElementSibling.style.maxHeight = '0';
+                        }
+                    });
+                    
+                    // Toggle current item
+                    if (isActive) {
+                        this.classList.remove('active');
+                        content.style.maxHeight = '0';
+                    } else {
+                        this.classList.add('active');
+                        content.style.maxHeight = content.scrollHeight + 'px';
+                    }
+                });
+            });
+            
+            // Automatically open the first item
+            if (accordionHeaders.length > 0) {
+                const firstHeader = accordionHeaders[0];
+                const firstContent = firstHeader.nextElementSibling;
+                
+                firstHeader.classList.add('active');
+                firstContent.style.maxHeight = firstContent.scrollHeight + 'px';
+            }
+            
+            // Add animation to icons
+            document.querySelectorAll('.accordion-item').forEach(item => {
+                item.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-2px)';
+                    this.style.boxShadow = '0 6px 15px rgba(0, 0, 0, 0.1)';
+                });
+                
+                item.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                    this.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.1)';
+                });
+            });
+        });
+    </script>
+</body>
+</html>
